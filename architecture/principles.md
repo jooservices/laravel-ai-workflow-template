@@ -132,7 +132,7 @@ Laravel projects using this documentation are built on strict type safety, compr
 
 ---
 
-## 1. Type Safety
+## Type Safety
 
 ### 🎯 Principle: Type Safety
 **What you must do:** All code must be type-safe with no implicit type coercion or ambiguous types.
@@ -141,16 +141,16 @@ Laravel projects using this documentation are built on strict type safety, compr
 
 ### 📋 Guidelines: How to Achieve Type Safety
 
-#### 1. File-Level Strict Mode
+#### File-Level Strict Mode
 Enable strict type checking for every PHP file to prevent automatic type coercion and catch type mismatches at runtime.
 
-#### 2. Explicit Type Declarations
+#### Explicit Type Declarations
 Declare parameter and return types for all functions/methods. Never rely on type inference for public APIs or interfaces.
 
-#### 3. Immutable Dependencies
+#### Immutable Dependencies
 Use readonly properties for injected dependencies to prevent accidental mutation and improve thread safety.
 
-#### 4. Generic Type Annotations
+#### Generic Type Annotations
 Document array shapes and collection types using PHPDoc to help static analysis tools understand complex structures.
 
 ### ⚙️ Rules/Standards: Exact Implementation
@@ -182,7 +182,7 @@ Document array shapes and collection types using PHPDoc to help static analysis 
 
 ---
 
-## 2. PHP 8.4+ Strict Compliance
+## PHP 8.4+ Strict Compliance
 
 ### 🎯 Principle: PHP 8.4+ Feature Adoption
 **What you must do:** All code MUST target PHP 8.4+ and use modern language features with strict typing.
@@ -191,16 +191,16 @@ Document array shapes and collection types using PHPDoc to help static analysis 
       
 ### 📋 Guidelines: PHP 8.4+ Feature Usage
 
-#### 1. Enhanced Type System
+#### Enhanced Type System
 Leverage PHP 8.4 union types, intersection types, and improved type system support for better type safety.
 
-#### 2. Property Hooks and Readonly
+#### Property Hooks and Readonly
 Use property hooks for computed properties and readonly for immutable data structures.
 
-#### 3. Performance Features
+#### Performance Features
 Utilize JIT compilation benefits and memory improvements for better runtime performance.
 
-#### 4. AI-Friendly Patterns
+#### AI-Friendly Patterns
 Write code that AI agents can easily understand and generate using clear type declarations.
 
 ### ⚙️ Rules/Standards: PHP 8.4+ Requirements
@@ -237,7 +237,7 @@ Write code that AI agents can easily understand and generate using clear type de
 
 ---
 
-## 3. Quality Pipeline
+## Quality Pipeline
 
 ### 🎯 Principle: Automated Quality Gates
 **What you must do:** All code must pass automated quality checks before merge to maintain consistent standards.
@@ -246,16 +246,16 @@ Write code that AI agents can easily understand and generate using clear type de
 
 ### 📋 Guidelines: How to Maintain Code Quality
 
-#### 1. Fix in Priority Order
+#### Fix in Priority Order
 Run tools sequentially and fix issues before proceeding: Pint → PHPCS → PHPMD → PHPStan.
 
-#### 2. Auto-Fix When Possible
+#### Auto-Fix When Possible
 Let Pint auto-fix style issues before manually addressing structural concerns.
 
-#### 3. Understand Violations
+#### Understand Violations
 Don't blindly suppress warnings - understand the issue and fix root cause.
 
-#### 4. Configure Once, Enforce Everywhere
+#### Configure Once, Enforce Everywhere
 Maintain tool configurations in version control; never override locally.
 
 ### ⚙️ Rules/Standards: Quality Requirements
@@ -275,7 +275,7 @@ Maintain tool configurations in version control; never override locally.
 
 ---
 
-## 4. Test Coverage
+## Test Coverage
 
 ### 🎯 Principle: Comprehensive Testing
 **What you must do:** All code must be covered by automated tests that verify correctness and prevent regressions.
@@ -284,19 +284,19 @@ Maintain tool configurations in version control; never override locally.
 
 ### 📋 Guidelines: How to Achieve Comprehensive Testing
 
-#### 1. Test Pyramid Strategy
+#### Test Pyramid Strategy
 Follow the testing pyramid: many unit tests, fewer integration tests, minimal E2E tests.
 
-#### 2. Arrange-Act-Assert Pattern
+#### Arrange-Act-Assert Pattern
 Structure all tests with clear setup, execution, and verification phases for readability.
 
-#### 3. Test Behavior, Not Implementation
+#### Test Behavior, Not Implementation
 Focus tests on public APIs and observable behavior, not internal implementation details.
 
-#### 4. Mock External Dependencies
+#### Mock External Dependencies
 Isolate units under test by mocking external services, databases, and third-party APIs.
 
-#### 5. Test Edge Cases
+#### Test Edge Cases
 Include tests for error conditions, boundary values, and exceptional scenarios.
 
 ### ⚙️ Rules/Standards: Exact Implementation
@@ -340,7 +340,7 @@ composer test:coverage-check  # Enforce coverage thresholds (CI gate)
 
 ---
 
-## 5. Modular Architecture
+## Modular Architecture
 
 ### 🎯 Principle: Domain-Driven Modularity
 **What you must do:** Organize code by business domain, not technical layer, with clear module boundaries.
@@ -349,16 +349,16 @@ composer test:coverage-check  # Enforce coverage thresholds (CI gate)
 
 ### 📋 Guidelines: How to Structure Modules
 
-#### 1. One Domain = One Module
+#### One Domain = One Module
 Each business domain gets its own self-contained module with all related code.
 
-#### 2. Module Independence
+#### Module Independence
 Modules communicate through contracts/interfaces, never direct dependencies on concrete implementations.
 
-#### 3. Core vs Domain Modules
+#### Core vs Domain Modules
 Core module contains only technical infrastructure (no business logic). Domain modules contain business-specific logic.
 
-#### 4. Decision Rule for Module Placement
+#### Decision Rule for Module Placement
 Ask: "Does this contain business-specific logic?"
 - **YES** → Business domain module ({ServiceName} SDK → {DomainModule} module)
 - **NO** → Core module (ActionLogger → Core module)
@@ -393,7 +393,7 @@ Ask: "Does this contain business-specific logic?"
 
 ---
 
-## 6. API Response Standardization
+## API Response Standardization
 
 ### 🎯 Principle: Consistent API Responses
 **What you must do:** All API endpoints must use a standardized response format for predictable client integration.
@@ -402,13 +402,13 @@ Ask: "Does this contain business-specific logic?"
 
 ### 📋 Guidelines: How to Standardize API Responses
 
-#### 1. Use Envelope Pattern
+#### Use Envelope Pattern
 Wrap all responses in a consistent structure with metadata, status, and data fields.
 
-#### 2. Resource vs Raw JSON Strategy
+#### Resource vs Raw JSON Strategy
 Use Resources for Model data, raw JSON for non-Model aggregated data.
 
-#### 3. Consistent Error Format
+#### Consistent Error Format
 Use the same error structure across all endpoints for predictable error handling.
 
 ### ⚙️ Rules/Standards: Response Requirements
@@ -427,7 +427,7 @@ Use the same error structure across all endpoints for predictable error handling
 
 ---
 
-## 7. Audit Logging
+## Audit Logging
 
 ### 🎯 Principle: Comprehensive Audit Trail
 **What you must do:** All domain mutations must be logged with actor, before/after state, and metadata.
@@ -436,16 +436,16 @@ Use the same error structure across all endpoints for predictable error handling
 
 ### 📋 Guidelines: How to Implement Audit Logging
 
-#### 1. Log All Mutations
+#### Log All Mutations
 Record create, update, delete operations on domain entities with context.
 
-#### 2. Capture State Changes
+#### Capture State Changes
 Store both before and after state to understand what changed.
 
-#### 3. Include Actor Information
+#### Include Actor Information
 Always record who performed the action for accountability.
 
-#### 4. Add Contextual Metadata
+#### Add Contextual Metadata
 Include request IP, user agent, and other relevant context.
 
 ### ⚙️ Rules/Standards: Logging Requirements
@@ -469,7 +469,7 @@ Include request IP, user agent, and other relevant context.
 
 ---
 
-## 8. Third-Party Integration Security
+## Third-Party Integration Security
 
 ### 🎯 Principle: Secure Third-Party Proxy
 **What you must do:** All third-party API interactions must be proxied through Laravel backend, never called directly from frontend.
@@ -478,19 +478,19 @@ Include request IP, user agent, and other relevant context.
 
 ### 📋 Guidelines: How to Integrate Third-Party APIs
 
-#### 1. Backend Proxy Pattern
+#### Backend Proxy Pattern
 Route all third-party requests through Laravel API endpoints with proper authentication.
 
-#### 2. Use SDK Contracts
+#### Use SDK Contracts
 Create and inject SDK contract interfaces, never use HTTP clients directly in business logic.
 
-#### 3. Secure Credential Management
+#### Secure Credential Management
 Store API keys, tokens, and secrets securely with proper rotation capabilities.
 
-#### 4. Comprehensive Logging
+#### Comprehensive Logging
 Automatically log all external API calls for monitoring and debugging.
 
-#### 5. Error Handling & Rate Limiting
+#### Error Handling & Rate Limiting
 Implement consistent error handling and respect third-party rate limits.
 
 ### ⚙️ Rules/Standards: Integration Security
@@ -517,7 +517,7 @@ Implement consistent error handling and respect third-party rate limits.
 
 ---
 
-## 9. Frontend Standards
+## Frontend Standards
 
 ### 🎯 Principle: Type-Safe Dark Theme UI
 **What you must do:** All frontend code must be TypeScript-only with consistent dark theme UI patterns.
@@ -526,16 +526,16 @@ Implement consistent error handling and respect third-party rate limits.
 
 ### 📋 Guidelines: How to Build Frontend
 
-#### 1. TypeScript-Only Development
+#### TypeScript-Only Development
 No JavaScript files permitted - use TypeScript with strict mode enabled.
 
-#### 2. Consistent UI Framework
+#### Consistent UI Framework
 Use Bootstrap + FontAwesome exclusively for all components and styling.
 
-#### 3. Standard Interaction Patterns
+#### Standard Interaction Patterns
 Implement consistent loading states, error handling, and user feedback.
 
-#### 4. Accessible Design Patterns
+#### Accessible Design Patterns
 Use appropriate controls for different interaction types (switches vs checkboxes).
 
 ### ⚙️ Rules/Standards: Frontend Requirements
@@ -561,7 +561,7 @@ Use appropriate controls for different interaction types (switches vs checkboxes
 
 ---
 
-## 10. Layered Request Architecture
+## Layered Request Architecture
 
 ### 🎯 Principle: Strict Layer Separation
 **What you must do:** Follow Middleware → FormRequest → Controller → Service → Repository flow with single responsibility per layer.
@@ -570,19 +570,19 @@ Use appropriate controls for different interaction types (switches vs checkboxes
 
 ### 📋 Guidelines: Layer Responsibilities
 
-#### 1. Middleware Layer
+#### Middleware Layer
 Handle cross-cutting concerns that apply to multiple endpoints: authentication, CORS, rate limiting, request logging.
 
-#### 2. FormRequest Layer  
+#### FormRequest Layer  
 Validate input data and handle endpoint-specific authorization before business logic execution.
 
-#### 3. Controller Layer
+#### Controller Layer
 Orchestrate HTTP request/response cycle. Delegate all business decisions to services.
 
-#### 4. Service Layer
+#### Service Layer
 Contain all business logic and domain rules. Coordinate between repositories and external services.
 
-#### 5. Repository Layer
+#### Repository Layer
 Handle data persistence operations only. Return domain models without business logic.
 
 ### ⚙️ Rules/Standards: Layer Boundaries
@@ -612,7 +612,7 @@ HTTP Request → Middleware → FormRequest → Controller → Service → Repos
 
 ---
 
-## 11. SOLID Design Principles
+## SOLID Design Principles
 
 ### 🎯 Principle: SOLID Object-Oriented Design
 **What you must do:** Apply SOLID principles to create maintainable, extensible, and testable object-oriented code.
@@ -621,19 +621,19 @@ HTTP Request → Middleware → FormRequest → Controller → Service → Repos
 
 ### 📋 Guidelines: How to Apply SOLID Principles
 
-#### 1. Single Responsibility Principle (SRP)
+#### Single Responsibility Principle (SRP)
 Each class should have only one reason to change. One responsibility per class.
 
-#### 2. Open/Closed Principle (OCP)  
+#### Open/Closed Principle (OCP)  
 Classes should be open for extension but closed for modification. Use interfaces and inheritance.
 
-#### 3. Liskov Substitution Principle (LSP)
+#### Liskov Substitution Principle (LSP)
 Subclasses must be substitutable for their base classes without breaking functionality.
 
-#### 4. Interface Segregation Principle (ISP)
+#### Interface Segregation Principle (ISP)
 Clients should not be forced to depend on interfaces they don't use. Keep interfaces focused.
 
-#### 5. Dependency Inversion Principle (DIP)
+#### Dependency Inversion Principle (DIP)
 High-level modules should not depend on low-level modules. Both should depend on abstractions.
 
 ### ⚙️ Rules/Standards: SOLID Implementation
@@ -677,7 +677,7 @@ High-level modules should not depend on low-level modules. Both should depend on
 
 ---
 
-## 12. Design Patterns
+## Design Patterns
 
 ### 🎯 Principle: Intentional Use of Proven Patterns
 **What you must do:** Apply well‑known architectural and object‑oriented patterns consistently to keep code predictable, testable, and easy to maintain.
@@ -686,15 +686,15 @@ High-level modules should not depend on low-level modules. Both should depend on
 
 ### 📋 Preferred Patterns
 
-#### 1. Layered Architecture
+#### Layered Architecture
 - ✅ **MUST:** Use the documented flow: `Middleware → FormRequest → Controller → Service → Repository/SDK → Database/External API`.
 - ✅ **MUST:** Keep responsibilities per layer as defined in [Layered Request Architecture](#10-layered-request-architecture).
 
-#### 2. Modular Architecture
+#### Modular Architecture
 - ✅ **MUST:** Separate Core (technical infrastructure) from Domain modules (business logic).  
 - ✅ **MUST:** One business domain = one module wherever practical.
 
-#### 3. Service & Repository Pattern
+#### Service & Repository Pattern
 - ✅ **MUST:** Use Services to encapsulate business use cases and domain rules.  
 - ✅ **MUST:** Use Repositories (`*Repository` + `*RepositoryContract`) for database access only.  
 - ✅ **MUST NOT:** Call external APIs from Repositories (use SDKs/Services instead).
@@ -740,20 +740,20 @@ final class ProductController extends Controller
 }
 ```
 
-#### 4. Strategy / Policy
+#### Strategy / Policy
 - ✅ **SHOULD:** Use Strategy or Policy objects when behavior varies by configuration, environment, or domain rules (e.g., pricing rules, provider selection).  
 - ✅ **MUST:** Depend on interfaces for strategies, not concrete implementations.
 
-#### 5. DTO / Value Object
+#### DTO / Value Object
 - ✅ **SHOULD:** Use DTOs/value objects for cross‑layer communication when data becomes complex (e.g., SDK requests/responses, aggregated data).  
 - ✅ **MUST:** Prefer strongly‑typed DTOs over `array<string,mixed>` in public APIs wherever feasible.
 
-#### 6. Events + Jobs
+#### Events + Jobs
 - ✅ **SHOULD:** Use domain Events to represent things that happened; use Jobs for async/long‑running work.  
 - ✅ **MUST:** Pass IDs/UUIDs into Jobs, not models (see Job Data Passing Policy).  
 - ✅ **SHOULD:** Let listeners stay thin and delegate heavy work to Jobs/Services.
 
-#### 7. Observers
+#### Observers
 - ✅ **SHOULD:** Use Observers for simple model lifecycle side‑effects (logging, notifications, event dispatch).  
 - ✅ **MUST NOT:** Put complex business logic or external API calls directly in Observers; delegate to Services/Jobs.
 
@@ -770,7 +770,7 @@ final class ProductController extends Controller
 
 ---
 
-## 12. API Documentation Standards
+## API Documentation Standards
 
 ### 🎯 Principle: Living API Documentation
 **What you must do:** All API endpoints must be automatically documented and kept current with code changes.
@@ -779,16 +779,16 @@ final class ProductController extends Controller
 
 ### 📋 Guidelines: Documentation Strategy
 
-#### 1. Code-Driven Documentation
+#### Code-Driven Documentation
 Generate API documentation automatically from existing code structure (FormRequests, Controllers, Resources).
 
-#### 2. Zero-Maintenance Documentation
+#### Zero-Maintenance Documentation
 Documentation updates automatically when code changes, eliminating manual sync overhead.
 
-#### 3. Complete Endpoint Coverage
+#### Complete Endpoint Coverage
 Every API endpoint documented with request parameters, validation rules, response formats, and example data.
 
-#### 4. Interactive Testing Interface
+#### Interactive Testing Interface
 Provide live API testing capabilities for development and debugging.
 
 ### ⚙️ Rules/Standards: Documentation Requirements
@@ -827,7 +827,7 @@ Provide live API testing capabilities for development and debugging.
 
 ---
 
-## 13. API Versioning Discipline
+## API Versioning Discipline
 
 ### 🎯 Principle: Backward Compatibility and Version Control
 **What you must do:** All API changes must maintain backward compatibility or use proper versioning to prevent breaking existing integrations.
@@ -836,16 +836,16 @@ Provide live API testing capabilities for development and debugging.
 
 ### 📋 Guidelines: Versioning Strategy
 
-#### 1. Semantic Versioning
+#### Semantic Versioning
 Use semantic versioning (MAJOR.MINOR.PATCH) to communicate the impact of changes clearly.
 
-#### 2. Backward Compatibility First
+#### Backward Compatibility First
 Prioritize backward-compatible changes whenever possible to minimize client disruption.
 
-#### 3. Graceful Deprecation
+#### Graceful Deprecation
 Provide advance notice and migration paths before removing functionality.
 
-#### 4. Multi-Version Support
+#### Multi-Version Support
 Maintain multiple API versions simultaneously to support gradual client migration.
 
 ### ⚙️ Rules/Standards: Versioning Requirements
@@ -889,7 +889,7 @@ Maintain multiple API versions simultaneously to support gradual client migratio
 
 ---
 
-## 14. FormRequest Validation
+## FormRequest Validation
 
 ### 🎯 Principle: Centralized Input Validation
 **What you must do:** All input validation must be handled by FormRequest classes with 100% test coverage.
@@ -898,10 +898,10 @@ Maintain multiple API versions simultaneously to support gradual client migratio
 
 ### 📋 Guidelines: How to Implement Validation
 
-#### 1. Comprehensive Rule Definition
+#### Comprehensive Rule Definition
 Define all validation rules in typed `rules()` method with clear documentation.
 
-#### 2. Custom Error Messages
+#### Custom Error Messages
 Provide user-friendly error messages for better API usability.
 
 #### 3. Authorization Integration

@@ -28,6 +28,45 @@ Quick lookup for all concrete rules, coverage targets, tool configurations, and 
 
 ---
 
+## PHP Coding Standards (Behavioral)
+
+### Exceptions & Error Handling
+
+- ✅ **MUST:** Use a small, project-specific exception hierarchy (e.g., `DomainException`, `ValidationException`, `InfrastructureException`) instead of generic `\Exception` for domain logic.  
+- ✅ **MUST:** Throw typed exceptions to represent error conditions; do not use magic return codes or `null` for exceptional flows.  
+- ✅ **MUST:** Log or rethrow when catching `\Throwable` or broad exceptions in infrastructure layers.  
+- ❌ **FORBIDDEN:** Swallowing exceptions silently (empty `catch` blocks).  
+- ❌ **FORBIDDEN:** Using error suppression (`@`) in production code.  
+
+### Dependency Management & Globals
+
+- ✅ **MUST:** Use constructor injection and Laravel’s container for all non-trivial dependencies (services, repositories, SDKs, loggers).  
+- ✅ **MUST:** Depend on interfaces/contracts in public APIs wherever reasonable.  
+- ❌ **FORBIDDEN:** Manually instantiating services in controllers or other framework-managed classes (e.g., `new SomeService()` instead of DI).  
+- ❌ **FORBIDDEN:** Static service methods for business logic (static-only utility classes are allowed for pure, stateless helpers).  
+- ❌ **FORBIDDEN:** Using global state as a coordination mechanism (e.g., writable singletons, global variables).
+
+### Comparisons & Null Handling
+
+- ✅ **MUST:** Use strict comparisons (`===`, `!==`) for booleans, integers, and strings in business logic.  
+- ✅ **MUST:** Model optional values explicitly in types (`string|null`, `?int`) and handle them deliberately.  
+- ❌ **FORBIDDEN:** Loose equality (`==`, `!=`) in security-, money-, or permission-related code paths.  
+- ❌ **FORBIDDEN:** Using magic sentinel values (e.g., `-1`, `0`, `''`) instead of proper nullable types or enums.
+
+### Enums & Value Objects
+
+- ✅ **MUST:** Use PHP backed enums for fixed sets of options (statuses, types, roles) instead of plain strings/ints in domain logic.  
+- ✅ **SHOULD:** Introduce small value objects (e.g., `Email`, `Money`, `Percentage`) where domain correctness is important.  
+- ❌ **FORBIDDEN:** “Stringly-typed” domain concepts passed around as unvalidated strings/ints (e.g., `'active'`, `'draft'`, `'paid'`).  
+
+### Runtime Configuration Expectations
+
+- ✅ **MUST:** Run production with `display_errors=Off` and `log_errors=On`; errors must be logged, not shown.  
+- ✅ **MUST:** Use a single canonical timezone (UTC) at the PHP/Laravel level; store and manipulate times as `DateTimeImmutable`/CarbonImmutable.  
+- ❌ **FORBIDDEN:** Modifying global `error_reporting` or timezone settings inside application code (configure via php.ini/env/bootstrap instead).
+
+---
+
 ## Quality Pipeline Standards
 
 ### Tool Execution Order (MANDATORY)
