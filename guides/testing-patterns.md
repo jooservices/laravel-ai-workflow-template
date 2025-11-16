@@ -444,7 +444,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Http\Requests;
 
-use Modules\WordPress\Http\Requests\StoreCategoryRequest;
+use Modules\Content\Http\Requests\StoreCategoryRequest;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Validator;
 
@@ -513,7 +513,7 @@ test_store_requires_authentication()
 
 **Examples:**
 - `tests/Unit/Services/UserServiceTest.php`
-- `tests/Feature/WordPress/CategoryApiTest.php`
+- `tests/Feature/Content/CategoryApiTest.php`
 - `tests/Unit/Http/Requests/StoreCategoryRequestTest.php`
 
 ---
@@ -578,6 +578,80 @@ Queue::assertPushed(ProcessJob::class, function ($job) {
 
 ---
 
+## Architecture Tests (Optional, Recommended)
+
+To enforce the architectural rules defined in `architecture/principles.md` and `reference/standards.md`, you can add **architecture tests** using PHPUnit or Pest.
+
+### Example: Controllers Must Not Depend on Repositories
+
+```php
+// tests/Architecture/ControllerDependenciesTest.php
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Architecture;
+
+use PHPUnit\Framework\TestCase;
+
+final class ControllerDependenciesTest extends TestCase
+{
+    public function test_controllers_do_not_depend_on_repositories(): void
+    {
+        // Pseudo-code example – adapt with your architecture testing tool of choice
+        // (e.g., Arkitect, Deptrac, phpunit-architecture-test, or custom reflection)
+
+        $controllers = $this->findClassesInNamespace('App\\Http\\Controllers');
+
+        foreach ($controllers as $controller) {
+            $dependencies = $this->getConstructorDependencies($controller);
+
+            foreach ($dependencies as $dependency) {
+                $this->assertStringNotContainsString('Repository', $dependency, sprintf(
+                    'Controller %s must not depend on repository %s (use Service instead).',
+                    $controller,
+                    $dependency
+                ));
+            }
+        }
+    }
+
+    // Stub helpers – replace with real discovery logic or dedicated tools
+    private function findClassesInNamespace(string $namespace): array
+    {
+        return []; // Implement using reflection or a package
+    }
+
+    private function getConstructorDependencies(string $class): array
+    {
+        return []; // Implement using reflection
+    }
+}
+```
+
+> **Note:** This is illustrative pseudo‑code. In a real project, use a dedicated architecture testing tool to codify these rules and make violations fail in CI.
+
+---
+
+## Mocking Policy (Summary)
+
+This project follows a strict mocking policy aligned with the architectural principles and standards:
+
+- **Unit tests**:
+  - Mock all external collaborators (repositories, SDKs, loggers, queues, events) using constructor‑injected contracts.
+  - Assert behavior and interactions (methods called, parameters passed), not just return values.
+- **Feature tests**:
+  - Use real HTTP and database, but mock external services/SDKs to avoid real network calls and side effects.
+  - Do not mock controllers or middleware in feature tests.
+- **Jobs & Events**:
+  - Jobs MUST accept IDs/UUIDs, not models. In Job tests, mock the repositories/services the Job uses and assert on their interactions.
+- **SDKs**:
+  - SDKs themselves should be fully unit tested; in other tests, treat them as external dependencies and mock or fake them.
+
+For complete rules, see the **“Mocking Standards”** section in `reference/standards.md`.
+
+---
+
 ## Best Practices
 
 ### ✅ DO
@@ -635,6 +709,6 @@ composer test -- --filter test_create_with_valid_data_returns_user
 
 ---
 
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+Copyright (c) 2025 Viet Vu  
+Company: JOOservices Ltd  
+Licensed under the MIT License.

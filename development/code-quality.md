@@ -41,4 +41,4 @@ This document will continue to focus solely on code quality tools and processes.
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
 **Company: JOOservices Ltd**
-All rights reserved.
+Licensed under the MIT License.

@@ -100,9 +100,9 @@ Epic: [Feature Group Name]
 **Example:**
 ```markdown
 ## Summary
-Enable content creators to generate AI-powered article outlines, introductions, 
-and meta descriptions directly in the WordPress post editor. All AI operations 
-use approved local models (Ollama) with mandatory manual review before publishing.
+Enable content creators to generate AI‑powered article outlines, introductions, 
+and meta descriptions directly in the blog post editor. All AI operations 
+use approved models with mandatory manual review before publishing.
 
 **Scope:** Phase 1 - Core content generation only (outline, intro, meta). 
 Phase 2 will include fact-checking and summaries.
@@ -116,8 +116,8 @@ Phase 2 will include fact-checking and summaries.
 **Example:**
 ```markdown
 ## Dependencies
-- Ollama installation on development/production servers
-- WordPress SDK authentication (wp_tokens table)
+- AI model runtime available in development/production
+- External content API authentication configured
 - Action logging infrastructure (`ActionLogger`)
 - DevOps approval for production deployment
 ```
@@ -162,7 +162,7 @@ Phase 2 will include fact-checking and summaries.
 - Code quality: "Passes `composer lint` pipeline"
 - Testing: "80% coverage with passing tests"
 - Documentation: "API endpoints documented in guide"
-- Integration: "Works with existing WordPress SDK"
+- Integration: "Works with existing external content SDK"
 - Performance: "Response time < 200ms for list operations"
 - Security: "FormRequest validation for all inputs"
 
@@ -208,15 +208,15 @@ Phase 2 will include fact-checking and summaries.
 **Example:**
 ```markdown
 ## Related Plans
-- `docs/features/wordpress/posts-management.md` - Post editor integration point
+- `docs/features/content/posts-management.md` - Post editor integration point
 - `docs/technical/caching-strategy.md` - May cache AI responses for similar prompts
 - Phase 2: Fact-checking expansion (separate plan TBD)
 ```
 
 ### Notes Section
 Use for:
-- **Technical constraints**: "Must use Ollama local models only"
-- **Dependencies**: "Blocked by WordPress SDK authentication (#42)"
+- **Technical constraints**: "Must use local models only" (if applicable)
+- **Dependencies**: "Blocked by external content API authentication (#42)"
 - **Risks**: "High memory usage if processing large posts"
 - **Future work**: "Consider adding translation support in v2"
 - **Related docs**: "See `docs/architecture/flow.md` for service layer pattern"
@@ -450,5 +450,5 @@ Use GitHub issues/projects to track plan status:
 ---
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+**Company: JOOservices Ltd**  
+Licensed under the MIT License.

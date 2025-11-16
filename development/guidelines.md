@@ -1730,5 +1730,5 @@ This guidelines document provides practical, step-by-step workflows for implemen
 ---
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+**Company: JOOservices Ltd**  
+Licensed under the MIT License.

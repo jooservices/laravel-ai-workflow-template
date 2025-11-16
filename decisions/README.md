@@ -6,9 +6,11 @@ Documents key technical decisions and their rationale.
 
 An Architecture Decision Record captures important architectural decisions along with their context and consequences.
 
-## Active ADRs
+## Example ADRs
 
-- [**2025-11-13: LM Studio API Selection**](2025-11-13-lm-studio-api.md) - Why we chose LM Studio over alternatives
+- (Sample) `2025-11-13-lm-studio-api.md` – Example of an ADR documenting why a particular AI API was chosen over alternatives.
+
+> **Note:** Treat the included ADR file(s) as examples of structure and depth. In each project, create your own ADRs that reflect that project’s actual decisions.
 
 ## ADR Format
 
@@ -38,6 +40,6 @@ Based on current architecture:
 
 ---
 
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+Copyright (c) 2025 Viet Vu  
+Company: JOOservices Ltd  
+Licensed under the MIT License.

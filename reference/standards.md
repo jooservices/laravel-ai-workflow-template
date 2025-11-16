@@ -4,9 +4,14 @@ Quick lookup for all concrete rules, coverage targets, tool configurations, and 
 
 ---
 
-## Type Safety Standards
+## Runtime & Type Safety Standards
 
-### MANDATORY Requirements
+### Runtime Requirements
+
+- ✅ **MUST:** PHP version **8.4+** (minimum).  
+- ✅ **MUST:** Laravel version **12.x** (minimum).  
+
+### Type Safety (MANDATORY Requirements)
 - ✅ **MUST:** `declare(strict_types=1);` in ALL PHP files (no exceptions)
 - ✅ **MUST:** Explicit types on all method parameters and return values
 - ✅ **MUST:** `final` keyword for all classes by default
@@ -93,12 +98,129 @@ composer test:coverage-check  # Enforce coverage thresholds (CI gate)
 
 ---
 
+## Mocking Standards
+
+### What to Mock
+
+- ✅ **MUST mock** external dependencies in unit tests:
+  - Third‑party SDKs and HTTP clients.
+  - Infrastructure services (mail, queues, storage, external caches).
+  - Cross‑module services when testing one module in isolation.
+- ❌ **MUST NOT mock**:
+  - The class under test itself.
+  - Core framework primitives (basic Eloquent operations, Laravel validation) in feature tests.
+
+### Where to Mock
+
+- **Unit tests**:
+  - ✅ Mock all collaborators of the unit under test (repositories, SDK contracts, loggers, events, queues).  
+  - ✅ Assert behavior and interactions (methods called, parameters passed), not just return values.
+- **Feature tests**:
+  - ✅ Use real HTTP and database.  
+  - ✅ Mock external services/SDKs to avoid real network calls and side effects.  
+  - ❌ DO NOT mock controllers or middleware in feature tests.
+- **Integration tests (if used)**:
+  - ✅ Use real services within your process boundary.  
+  - ✅ Stub only truly external systems that cannot be run locally.
+
+### How to Mock
+
+- ✅ Prefer **constructor‑injected contracts** as seams (`SdkContract`, `RepositoryContract`, `ServiceContract`).  
+- ✅ Use mocks/spies/fakes to verify interactions (`expects`, `shouldReceive`, `shouldHaveReceived`).  
+- ✅ Prefer behavioral assertions over deep implementation detail assertions (e.g., don’t assert on private method calls).  
+- ❌ Avoid over‑mocking: if a dependency is simple and stable (e.g., value objects, DTOs), use the real implementation.
+
+### Special Rules
+
+- **Jobs & Events**:
+  - ✅ MUST pass IDs/UUIDs, not Eloquent models, into Jobs.  
+  - ✅ In Job tests, mock repositories/services the Job depends on; assert behavior and error handling.
+- **SDKs**:
+  - ✅ SDKs themselves MUST be thoroughly unit‑tested with clear input/output behavior.  
+  - ✅ In other layers (services, controllers), SDKs MUST be mocked or faked to avoid real external calls.
+- **Logging**:
+  - ✅ It is acceptable to mock `ActionLogger` (or similar logging contracts) to assert that critical operations are logged once per mutation.  
+
+Mocking must always support the architectural rules defined in `architecture/principles.md` and `architecture/flow.md`; tests must verify behavior at the correct layer boundaries rather than coupling to internal implementation details.
+
+---
+## Cache Backend Selection
+
+### Default Drivers by Environment
+
+- **Local / Development (`APP_ENV=local`)**  
+  - ✅ **SHOULD:** Use `CACHE_DRIVER=file` for simplicity and zero extra infrastructure.  
+  - ✅ **MUST:** Write code that assumes a production cache backend (Redis) will be used in higher environments (no driver‑specific logic in code).
+
+- **Production / Staging**  
+  - ✅ **SHOULD:** Use `CACHE_DRIVER=redis` as the default cache backend.  
+  - ✅ **MAY:** Temporarily use `CACHE_DRIVER=database` for small deployments that do not yet have Redis, but MUST plan to move to Redis for higher traffic.
+
+### When to Use Each Backend
+
+- **File cache (`file` driver)**  
+  - ✅ **Use for:** Local development or single‑instance test environments.  
+  - ❌ **Do not use for:** Multi‑instance production deployments, high‑volume caching, or shared state.
+
+- **Database cache (`database` driver)**  
+  - ✅ **Use for:** Small apps needing shared cache across instances when Redis is not available.  
+  - ❌ **Do not use for:** High‑churn or high‑volume cache scenarios that would compete with main DB workload.
+
+- **Redis cache (`redis` driver)**  
+  - ✅ **Use for:** Production and staging environments as the primary cache backend.  
+  - ✅ **Use for:** High‑traffic/hot paths (query results, external API responses, computed data).  
+  - ❌ **Do not use for:** Data that must be persisted long‑term; always handle cache misses and treat Redis as ephemeral.
+
+### Code-Level Rules
+
+- ✅ **MUST:** Select cache backend via configuration (`CACHE_DRIVER`) and environment, not in application code.  
+- ✅ **MUST:** Use the `Cache` facade or cache contracts; do NOT hard‑code specific drivers in Services.  
+- ✅ **MUST:** Implement application‑level caching only in the Service layer (or dedicated caching helpers used by Services).  
+- ✅ **MUST:** Handle cache misses gracefully (never assume cache hit).  
+- ❌ **FORBIDDEN:** Choosing or switching cache drivers inside business logic.  
+
+---
 ## Module Standards
 
 ### Naming Convention
 - ✅ **MUST:** Singular PascalCase names matching business domain
 - ✅ **Correct:** `{DomainName}`, `{BusinessDomain}`, `{ServiceName}`
 - ❌ **Wrong:** `Posts` (technical feature), `{ServiceName}Integration` (redundant)
+
+---
+
+## Event Standards
+
+### Responsibilities
+
+- ✅ **MUST:** Represent a domain or system event (something that *happened*), not execute business logic.  
+- ✅ **MUST:** Be immutable data carriers (public readonly properties or constructor‑only assignment).  
+- ✅ **MUST:** Use descriptive, past‑tense names (`UserRegistered`, `OrderShipped`, `InferenceStreamed`).  
+- ❌ **FORBIDDEN:** Calling external APIs directly from event classes.
+
+### Listeners
+
+- ✅ **MUST:** Contain minimal orchestration logic (e.g., send notifications, dispatch Jobs).  
+- ✅ **MAY:** Dispatch Jobs for heavy or slow work (email, reports, AI calls).  
+- ❌ **FORBIDDEN:** Embedding complex business workflows or cross‑aggregate logic in listeners; that belongs in Services.  
+- ❌ **FORBIDDEN:** Direct database writes that bypass Service/Repository rules.
+
+---
+
+## Observer Standards
+
+### Responsibilities
+
+- ✅ **MUST:** React to model lifecycle events (created, updated, deleted) with simple side effects.  
+- ✅ **MAY:** Log actions, dispatch events, or dispatch Jobs.  
+- ❌ **FORBIDDEN:** Containing core business logic – observers should delegate to Services when domain rules are required.  
+- ❌ **FORBIDDEN:** Calling external APIs directly; use Jobs/Services instead.
+
+### Usage
+
+- ✅ **MUST:** Keep observers thin and focused on cross‑cutting concerns (e.g., audit logging, notifications).  
+- ✅ **MUST:** Register observers in Service Providers or dedicated bootstrapping locations.  
+- ✅ **SHOULD:** Prefer explicit Services + Events when behavior grows beyond simple model hooks.
 
 ---
 
@@ -515,23 +637,59 @@ Log::channel('external')->error('Service error', [
 
 ---
 
-## WordPress Integration Standards
+## Logging Storage & Observability Strategy
+
+### File Logs (Baseline)
+
+- ✅ **MUST:** Treat Laravel log channels (including Action, General, and Third‑Party Request logs) as the **primary write target**.  
+- ✅ **MUST:** Write logs to `storage/logs/*.log` (or equivalent) and let infrastructure ship them to central log systems.  
+- ❌ **FORBIDDEN:** Giving developers direct SSH access to production servers solely to read logs.
+
+### Centralized Logging (Recommended)
+
+- ✅ **SHOULD:** Configure infrastructure to collect `storage/logs/*.log` and send them to a central log system (e.g., ELK/Elastic, Loki/Grafana, CloudWatch, Datadog, etc.).  
+- ✅ **MUST:** Give developers access to **centralized log dashboards/search**, not to production servers.  
+- ✅ **MUST:** At minimum, centralize the `third-party-requests` channel once implemented so external API issues can be diagnosed from a single place.  
+- ❌ **FORBIDDEN:** Relying on manual server access as the primary way to view production logs.
+
+### Database-Backed Audit Logs (Optional, Recommended for Action Log)
+
+- ✅ **MAY:** Persist Action Log entries into a dedicated database table (e.g., `audit_logs`) **in addition to** file logging, when you need queryable audit trails in the application UI.  
+- ✅ **SHOULD:** Use a dedicated model/repository for audit logs; do not mix audit storage with domain models.  
+- ✅ **MUST:** Keep sensitive data masked in database logs as well as in file logs.  
+- ❌ **FORBIDDEN:** Storing high-volume general/third‑party logs in relational DB for routine logging (use file + central log system instead).
+
+### Secure UI for Log Inspection (Optional)
+
+- ✅ **MAY:** Build an internal, authenticated admin UI (or API) to read and filter **database-backed audit / third‑party request logs** for debugging and compliance.  
+- ✅ **MUST:** Protect such UI with strong authorization (admin‑only or dedicated permissions).  
+- ✅ **MUST:** Only display sanitized fields; never expose secrets, tokens, or full payloads that violate privacy/security rules.  
+- ❌ **FORBIDDEN:** Exposing raw log files or arbitrary file readers in the admin UI.
+
+---
+
+## External Service Integration Standards (Example)
+
+> **Example:** These standards show how to integrate with a third‑party REST API using an SDK and environment‑based configuration. Adapt the names and env vars to your own external services (e.g., payment provider, CMS, internal API).
 
 ### SDK Usage
-- ✅ **MUST:** Use `SdkContract`, never Guzzle directly
-- ✅ **MUST:** Proxy through Laravel - never call WordPress from frontend
-- ✅ **MUST:** Use SDK methods: `posts()`, `categories()`, `token()`, etc.
+
+- ✅ **MUST:** Use an SDK contract (e.g., `ExternalServiceSdkContract`), never Guzzle directly in services.  
+- ✅ **MUST:** Proxy all external calls through Laravel – never call third‑party APIs directly from the frontend.  
+- ✅ **MUST:** Expose clear SDK methods (e.g., `listItems()`, `createItem()`, `authenticate()`) that hide HTTP details.
 
 ### Configuration
-- WordPress URL: `WP_URL` (default: `https://soulevil.com`)
-- API timeout: `WORDPRESS_API_TIMEOUT` (default: 10 seconds)
-- User agent: `WORDPRESS_API_USER_AGENT` (default: `CoreWordPressSdk/1.0`)
-- Namespace: `WORDPRESS_API_NAMESPACE` (default: `wp/v2`)
 
-### JWT Token Management
-- Storage: `wp_tokens` table (hashed)
-- Remember functionality: Optional checkbox in navbar
-- Auto-injection: Bearer header via token resolver
+- Base URL env var (e.g., `EXTERNAL_API_URL`)  
+- API timeout env var (e.g., `EXTERNAL_API_TIMEOUT`, default 10 seconds)  
+- User agent env var (e.g., `EXTERNAL_API_USER_AGENT`)  
+- API namespace or version env var (e.g., `EXTERNAL_API_NAMESPACE`)  
+
+### Token / Credential Management
+
+- Store access tokens/credentials securely (e.g., hashed tokens in a dedicated table).  
+- “Remember me” functionality is optional and must respect security requirements.  
+- Auto‑inject Bearer/API keys via central resolver/middleware, not scattered through the codebase.
 
 ---
 
@@ -706,7 +864,7 @@ Coverage: XX% or N/A or Documentation
 - ✅ **MUST:** `Generated-By-Tool` - Tool name (e.g., "Cursor Pro", "GitHub Copilot")
 - ✅ **MUST:** `Model` - Model version (e.g., "Auto", "claude-sonnet-3.5-20241022", "gpt-4-turbo-2024-04-09")
 - ✅ **MUST:** `Task-ID` - Task reference (e.g., "SDK-1", "AUTH-2") or `N/A` if no task exists
-- ✅ **MUST:** `Plan` - Plan file path (e.g., "docs/plans/technical/2025-11-13-lm-studio-sdk.md") or `N/A` if no plan exists
+- ✅ **MUST:** `Plan` - Plan file path (e.g., "docs/plans/technical/2025-11-13-external-sdk-integration.md") or `N/A` if no plan exists
 - ✅ **MUST:** `Coverage` - Test coverage percentage (e.g., "95%") or `N/A` if no code changes, or `Documentation` for docs-only commits
 
 **Rules:**
@@ -807,6 +965,6 @@ composer test:coverage            # HTML coverage report
 ```
 ---
 
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+Copyright (c) 2025 Viet Vu  
+Company: JOOservices Ltd  
+Licensed under the MIT License.

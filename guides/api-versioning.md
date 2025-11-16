@@ -235,4 +235,4 @@ class ApiClient {
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
 **Company: JOOservices Ltd**
-All rights reserved.
+Licensed under the MIT License.

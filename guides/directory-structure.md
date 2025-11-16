@@ -2,7 +2,10 @@
 
 ## Overview
 
-This guide explains the purpose and organization of each directory within the `docs/` folder, following the **Principle → Guideline → Standard** hierarchy.
+This guide explains the purpose and organization of each directory within the documentation root, following the **Principle → Guideline → Standard** hierarchy.
+
+> **When used as a Git submodule:**  
+> In a consuming Laravel project, this repository is typically mounted under `<project-root>/docs/`. In that setup, the root of this repo **is** the `docs/` folder for your project.
 
 ---
 
@@ -71,8 +74,8 @@ This guide explains the purpose and organization of each directory within the `d
 **Purpose:** Feature-specific tutorials with complete code examples.
 
 **Contents:**
-- `core-wordpress-sdk.md` - WordPress REST API integration patterns
-- `lm-studio-sdk.md` - Local AI model integration and usage
+- `restful-api-design.md` - RESTful API design patterns
+- `laravel-components-patterns.md` - Laravel components and naming
 - `writing-plans.md` - How to write technical implementation plans
 - `directory-structure.md` - This guide
 
@@ -115,7 +118,7 @@ plans/
 
 **Examples:**
 - `2025-11-12-strict-types-enforcement.md`
-- `2025-11-13-lm-studio-sdk.md`
+- `2025-11-13-external-sdk-integration.md`
 - `2025-11-14-core-http-client.md`
 
 ### `/docs/plans/features/` - Feature Plans
@@ -345,5 +348,5 @@ plans/
 ---
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+**Company: JOOservices Ltd**  
+Licensed under the MIT License.

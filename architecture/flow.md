@@ -1,5 +1,8 @@
 # Architecture Flow - Service & Repository Pattern
 
+> **Note:** The examples in this document use a specific domain (WordPress/blog‑style content) to demonstrate patterns.  
+> In your own project, replace these names (`Modules\WordPress\...`, `WpToken`, `CategoryService`, etc.) with your own bounded contexts and entities (e.g., `Modules\Product`, `Modules\Blog`, `ApiToken`, `CategoryService`). The architectural rules remain the same.
+
 ## Proposed Flow
 
 ```
@@ -1349,5 +1352,5 @@ public function test_create_saves_post_to_database(): void
 ---
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+**Company: JOOservices Ltd**  
+Licensed under the MIT License.

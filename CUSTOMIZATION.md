@@ -1,20 +1,20 @@
-# Template Customization Guide
+# Integrating This Documentation Submodule
 
-This guide explains how to customize this Laravel documentation template for your project.
+This guide explains how to adopt and customize this Laravel documentation submodule in your own project.
 
-## Placeholder Replacement
+## Placeholder Reference
 
-Replace the following placeholders throughout the documentation:
+The documentation uses a few generic placeholders in examples. When you create **your own modules, plans, ADRs, and guides in your main project**, use these as patterns and replace them with your real names.
 
-### Project Information
+### Project Information (for your parent project)
 
-- `{ProjectName}` → Your project name (e.g., "MyLaravelApp")
-- `{CompanyName}` → Your company name (default: "JOOservices Ltd")
-- `{OwnerEmail}` → Your email (default: "jooservices@gmail.com")
+- `{ProjectName}` → Your project name (e.g., "MyLaravelApp")  
+- `{CompanyName}` → Your company name (default examples use "JOOservices Ltd")  
+- `{OwnerEmail}` → Your email (default examples use "jooservices@gmail.com")
 
 ### Module & Domain Names
 
-- `{DomainModule}` → Your domain module name (e.g., "Product", "Order", "Payment")
+- `{DomainModule}` → Domain module name in your app (e.g., "Product", "Order", "Payment")
 - `{DomainModule1}`, `{DomainModule2}`, `{DomainModule3}` → Multiple domain modules
 - `{BusinessDomain}` → Business domain name (e.g., "E-commerce", "Inventory")
 - `{BusinessDomain1}`, `{BusinessDomain2}` → Multiple business domains
@@ -23,14 +23,11 @@ Replace the following placeholders throughout the documentation:
 
 - `{ServiceName}` → External service name (e.g., "Stripe", "PayPal", "WordPress")
 - `{ExternalService}` → Generic external service reference
-- `{Entity}` → Entity/model name (e.g., "Product", "Order", "User")
-- `{entity}` → Lowercase entity name (e.g., "product", "order", "user")
-- `{entities}` → Plural lowercase (e.g., "products", "orders", "users")
-- `{Entities}` → Plural capitalized (e.g., "Products", "Orders", "Users")
+- `{Entity}` / `{entity}` / `{entities}` / `{Entities}` → Example entity/model names
 
 ### Technology References
 
-- `{DocumentationTool}` → Your documentation tool (e.g., "LM Studio", "GitBook")
+- `{DocumentationTool}` → Any documentation automation tool you may use (e.g., "LM Studio", "GitBook")
 - `{servicename}` → Lowercase service name for channels/queues
 
 ## Copyright Information
@@ -66,64 +63,65 @@ This template includes references to optional technologies:
 - **Location:** Referenced in frontend patterns guide
 - **Action:** If not using, you can skip Inertia.js-specific sections
 
-## Customization Steps
+## How to Use This Submodule in Your Project
 
-1. **Replace Project Name**
-   - Search and replace `{ProjectName}` with your actual project name
-   - Update README.md title and description
+1. **Add as Git Submodule**
+   - Add this repository under your main project, for example:
+     - `<project-root>/docs/` (recommended) or
+     - `<project-root>/documentation/`
+   - Treat the root of this submodule as your documentation root.
 
-2. **Replace Domain/Module Names**
-   - Search and replace `{DomainModule}` with your actual module names
-   - Update examples in `guides/module-creation.md`
-   - Update module references in `architecture/principles.md`
+2. **Decide What to Keep vs. Ignore**
+   - Keep core docs that are generally useful for any Laravel project:
+     - `architecture/`, `development/`, `reference/`, `guides/` (most of them)
+   - Mark or ignore optional/stack‑specific docs in your parent project:
+     - WordPress‑specific examples
+     - LM Studio / AI‑specific workflow docs
+     - Inertia.js / Vue 3 frontend patterns (if not using them)
 
-3. **Replace Service Names**
-   - Search and replace `{ServiceName}` with your external service names
-   - Update SDK examples in guides
-   - Update integration standards in `reference/standards.md`
+3. **Create Your Own Project-Specific Docs in the Parent Repo**
+   - Add **plans** in your main repo (preferably under `docs/plans/` in the parent):
+     - `plans/features/` – feature/product plans
+     - `plans/technical/` – refactors, infra, technical debt
+   - Add **decisions** (ADRs) in the parent project’s `docs/decisions/`.
+   - Add **retrospectives** in the parent project’s `docs/retrospectives/`.
 
-4. **Update Code Examples**
-   - Replace `{Entity}` with your actual model names
-   - Update controller, service, and repository examples
-   - Update route examples
+4. **Use Placeholders as Patterns, Not Required Replacements**
+   - When you copy examples into your main project:
+     - Replace `{DomainModule}`, `{ServiceName}`, `{Entity}`, etc. with your real names.
+   - You generally do **not** need to bulk‑search/replace these placeholders inside this submodule itself.
 
-5. **Remove Unused Sections**
-   - Remove guides for technologies you don't use
-   - Remove optional sections that don't apply to your project
+5. **Prune What You Don’t Need (Optional)**
+   - If you fork this repo instead of using it read‑only:
+     - You may remove guides for technologies you will never use (e.g., WordPress‑only sections).
+     - You can add your own domain‑specific guides under `guides/`.
 
-6. **Add Project-Specific Content**
-   - Add your own plans in `plans/` directory
-   - Add your own decisions in `decisions/` directory
-   - Add your own retrospectives in `retrospectives/` directory
+## File Structure (Recommended Layout in Parent Project)
 
-## File Structure
-
+```text
+<project-root>/
+└── docs/                      # Your project’s documentation root (contains this submodule)
+    ├── README.md              # Main documentation index (from this repo or overridden)
+    ├── CUSTOMIZATION.md       # This file (integration guide)
+    ├── ai-workflow.md         # AI development workflow (optional)
+    ├── architecture/          # Architecture principles and flow
+    ├── development/           # Development guidelines and code quality
+    ├── guides/                # Step-by-step implementation guides
+    ├── reference/             # Quick lookup standards
+    ├── decisions/             # Architecture Decision Records (ADRs)
+    ├── retrospectives/        # Post-mortems and lessons learned
+    └── plans/                 # Your project-specific plans (in parent project)
 ```
-laravel-docs-template/
-├── README.md                    # Main documentation index
-├── CUSTOMIZATION.md            # This file
-├── ai-workflow.md              # AI development workflow (customize for your team)
-├── architecture/               # Architecture principles and flow
-├── development/                # Development guidelines and code quality
-├── guides/                     # Step-by-step implementation guides
-├── reference/                  # Quick lookup standards
-├── decisions/                  # Architecture Decision Records (ADRs)
-├── retrospectives/             # Post-mortems and lessons learned
-└── stories/                    # User stories and feature documentation
-```
 
-## Validation Checklist
+## Integration Checklist
 
-After customization, verify:
+In your main project, verify:
 
-- [ ] All `{ProjectName}` placeholders replaced
-- [ ] All `{DomainModule}` placeholders replaced
-- [ ] All `{ServiceName}` placeholders replaced
-- [ ] All `{Entity}` placeholders replaced
-- [ ] Code examples use your actual module/entity names
-- [ ] Copyright footer present in all markdown files
-- [ ] Optional technology references clarified (if not using)
-- [ ] Project-specific plans/decisions added (if applicable)
+- [ ] This submodule is mounted under a clear path (e.g., `docs/`).
+- [ ] You know which guides are **optional** (WordPress, LM Studio, Inertia.js, etc.).
+- [ ] Project-specific plans are added under `docs/plans/` in the parent repo.
+- [ ] Project-specific decisions are added under `docs/decisions/` in the parent repo.
+- [ ] Project-specific retrospectives are added under `docs/retrospectives/` in the parent repo.
 
 ## Support
 
@@ -135,5 +133,5 @@ For questions or issues with this template:
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**  
 **Company: JOOservices Ltd**  
-All rights reserved.
+Licensed under the MIT License.
 

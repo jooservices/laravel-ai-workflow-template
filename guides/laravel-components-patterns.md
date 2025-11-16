@@ -1106,10 +1106,10 @@ namespace Modules\Core\Console\Commands;
 use Illuminate\Console\Command;
 use App\Logging\ActionLogger;
 
-final class LmStudioPingCommand extends Command
+final class ExternalServicePingCommand extends Command
 {
-    protected $signature = 'lmstudio:ping {--json : Output JSON payload}';
-    protected $description = 'Check LM Studio health status from the CLI.';
+    protected $signature = 'external:ping {--json : Output JSON payload}';
+    protected $description = 'Check external service health status from the CLI.';
 
     public function __construct(private readonly ActionLogger $actionLogger)
     {
@@ -1130,17 +1130,17 @@ final class LmStudioPingCommand extends Command
 - ✅ Return exit codes (`SUCCESS`, `FAILURE`)
 - ✅ Use `$this->info()`, `$this->error()`, `$this->table()`
 
-**Example from Codebase:**
+**Example:**
 ```php
-final class LmStudioPingCommand extends Command
+final class ExternalServicePingCommand extends Command
 {
-    protected $signature = 'lmstudio:ping {--json : Output JSON payload}';
-    protected $description = 'Check LM Studio health status from the CLI.';
+    protected $signature = 'external:ping {--json : Output JSON payload}';
+    protected $description = 'Check external service health status from the CLI.';
 
     public function handle(): int
     {
-        if (! config('features.lmstudio.enabled', false)) {
-            $this->warn('LM Studio integration is disabled via feature flag.');
+        if (! config('features.external_service.enabled', false)) {
+            $this->warn('External service integration is disabled via feature flag.');
             return self::FAILURE;
         }
 
@@ -1415,6 +1415,6 @@ final class ProcessLmStudioJob implements ShouldQueue
 
 ---
 
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+Copyright (c) 2025 Viet Vu  
+Company: JOOservices Ltd  
+Licensed under the MIT License.

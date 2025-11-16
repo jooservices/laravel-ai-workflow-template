@@ -2,7 +2,13 @@
 
 ## Philosophy
 
-{ProjectName} is built on strict type safety, comprehensive testing, and automated quality gates. Every line of code must pass a rigorous pipeline before merge.
+Laravel projects using this documentation are built on strict type safety, comprehensive testing, and automated quality gates. Every line of code must pass a rigorous pipeline before merge.
+
+### Framework Baseline
+
+- ✅ **MUST:** PHP version **8.4+** (minimum).  
+- ✅ **MUST:** Laravel version **12.x** (minimum).  
+- ✅ **MUST:** All new code and examples follow Laravel 12 conventions (routing, configuration, bootstrap, etc.).
 
 ## 🎯 Quick Principles Summary
 
@@ -11,11 +17,11 @@
 - Explicit types on all methods, `final` classes, `readonly` dependencies
 - PHPStan level max
 
-### PHP 8.4 Strict Compliance
-- **Modern PHP features only:** Use PHP 8.4 features for better type safety
-- **Enhanced type system:** Leverage union types, readonly properties, property hooks
-- **Performance optimization:** JIT compilation and memory improvements
-- **AI-friendly patterns:** Clear type declarations for better AI code generation
+### PHP 8.4+ Compliance
+- **Modern PHP features only:** Use PHP 8.4+ features for better type safety.
+- **Enhanced type system:** Leverage union types, readonly properties, attributes, and other modern features.
+- **Performance optimization:** Use idiomatic PHP 8.4 patterns for performance and maintainability.
+- **AI-friendly patterns:** Clear type declarations for better AI code generation.
 
 ### Quality Pipeline  
 - **Order:** Pint → PHPCS → PHPMD → PHPStan
@@ -176,17 +182,17 @@ Document array shapes and collection types using PHPDoc to help static analysis 
 
 ---
 
-## 2. PHP 8.4 Strict Compliance
+## 2. PHP 8.4+ Strict Compliance
 
-### 🎯 Principle: Modern PHP Feature Adoption
-**What you must do:** Use PHP 8.4 features exclusively with strict typing and modern language patterns.
+### 🎯 Principle: PHP 8.4+ Feature Adoption
+**What you must do:** All code MUST target PHP 8.4+ and use modern language features with strict typing.
 
-**Why:** PHP 8.4 provides superior type safety, performance optimizations, and developer experience. Modern features enable better AI code generation, static analysis, and runtime performance. Strict compliance ensures consistent codebase patterns.
-
-### 📋 Guidelines: PHP 8.4 Feature Usage
+**Why:** PHP 8.4 provides superior type safety, performance optimizations, and developer experience. Strict adoption of 8.4 features ensures consistent patterns, predictable behavior, and better support for AI tooling and static analysis.
+      
+### 📋 Guidelines: PHP 8.4+ Feature Usage
 
 #### 1. Enhanced Type System
-Leverage PHP 8.4's improved union types, intersection types, and generic support for better type safety.
+Leverage PHP 8.4 union types, intersection types, and improved type system support for better type safety.
 
 #### 2. Property Hooks and Readonly
 Use property hooks for computed properties and readonly for immutable data structures.
@@ -197,13 +203,12 @@ Utilize JIT compilation benefits and memory improvements for better runtime perf
 #### 4. AI-Friendly Patterns
 Write code that AI agents can easily understand and generate using clear type declarations.
 
-### ⚙️ Rules/Standards: PHP 8.4 Requirements
+### ⚙️ Rules/Standards: PHP 8.4+ Requirements
 
 #### Language Feature Requirements:
-- ✅ **MUST:** Use PHP 8.4 syntax and features exclusively
-- ✅ **MUST:** Leverage property hooks for computed properties
-- ✅ **MUST:** Use readonly properties for immutable data
-- ✅ **MUST:** Implement union and intersection types where appropriate
+- ✅ **MUST:** Use PHP 8.4+ syntax and features consistently (no legacy 7.x–8.3‑style code).  
+- ✅ **MUST:** Use readonly properties for immutable data.  
+- ✅ **MUST:** Implement union and intersection types where appropriate.  
 
 #### Type System Enhancement:
 - ✅ **MUST:** Use enhanced array shape declarations: `array{key: string, value: int}`
@@ -212,10 +217,10 @@ Write code that AI agents can easily understand and generate using clear type de
 - ✅ **MUST:** Implement proper null safety with union types: `string|null`
 
 #### Performance Optimization:
-- ✅ **MUST:** Design code to benefit from JIT compilation
-- ✅ **MUST:** Use efficient memory patterns with readonly properties
-- ✅ **MUST:** Implement proper caching with PHP 8.4's improved reflection performance
-- ❌ **FORBIDDEN:** Legacy PHP patterns that prevent JIT optimization
+- ✅ **MUST:** Design code to be efficient and cache‑friendly.  
+- ✅ **MUST:** Use efficient memory patterns with readonly properties where appropriate.  
+- ✅ **MUST:** Implement proper caching informed by profiling and real usage.  
+- ❌ **FORBIDDEN:** Legacy PHP patterns that significantly hinder performance when modern 8.4+ alternatives exist.
 
 #### AI-Friendly Code Patterns:
 - ✅ **MUST:** Clear, explicit type declarations for AI code generation
@@ -224,10 +229,9 @@ Write code that AI agents can easily understand and generate using clear type de
 - ✅ **MUST:** Self-documenting code structures using modern PHP features
 
 #### Migration Standards:
-- ✅ **MUST:** All new code uses PHP 8.4 features
-- ✅ **MUST:** Refactor existing code to PHP 8.4 patterns during modifications
-- ❌ **FORBIDDEN:** Mixing PHP 7.x/8.0/8.1 patterns with modern code
-- ❌ **FORBIDDEN:** Legacy workarounds when native PHP 8.4 solutions exist
+- ✅ **MUST:** All new code uses the PHP 8.4+ feature set.  
+- ✅ **MUST:** Refactor existing code toward modern 8.4 patterns during modifications.  
+- ❌ **FORBIDDEN:** Mixing legacy 7.x–8.3 idioms with modern 8.4+ code in the same component when modern alternatives exist.
 
 > **Implementation Details:** See [Development Guidelines](../development/guidelines.md#php-84-implementation) for specific feature usage patterns and migration strategies.
 
@@ -673,6 +677,99 @@ High-level modules should not depend on low-level modules. Both should depend on
 
 ---
 
+## 12. Design Patterns
+
+### 🎯 Principle: Intentional Use of Proven Patterns
+**What you must do:** Apply well‑known architectural and object‑oriented patterns consistently to keep code predictable, testable, and easy to maintain.
+
+**Why:** Clear patterns (layered architecture, modules, services, repositories, strategies, DTOs, events, jobs) give humans and AI a shared mental model. They reduce accidental complexity and make it obvious where code belongs and how to extend it.
+
+### 📋 Preferred Patterns
+
+#### 1. Layered Architecture
+- ✅ **MUST:** Use the documented flow: `Middleware → FormRequest → Controller → Service → Repository/SDK → Database/External API`.
+- ✅ **MUST:** Keep responsibilities per layer as defined in [Layered Request Architecture](#10-layered-request-architecture).
+
+#### 2. Modular Architecture
+- ✅ **MUST:** Separate Core (technical infrastructure) from Domain modules (business logic).  
+- ✅ **MUST:** One business domain = one module wherever practical.
+
+#### 3. Service & Repository Pattern
+- ✅ **MUST:** Use Services to encapsulate business use cases and domain rules.  
+- ✅ **MUST:** Use Repositories (`*Repository` + `*RepositoryContract`) for database access only.  
+- ✅ **MUST NOT:** Call external APIs from Repositories (use SDKs/Services instead).
+
+**Example (GOOD):**
+```php
+// Service depends on repository contract
+final class ProductService
+{
+    public function __construct(
+        private readonly ProductRepositoryContract $repository,
+    ) {}
+
+    public function listActive(): array
+    {
+        return $this->repository->findActive();
+    }
+}
+
+// Repository handles DB only
+final class ProductRepository implements ProductRepositoryContract
+{
+    public function findActive(): array
+    {
+        return Product::query()
+            ->where('active', true)
+            ->orderBy('name')
+            ->get()
+            ->all();
+    }
+}
+```
+
+**Example (BAD – FORBIDDEN):**
+```php
+// ❌ Controller calling repository directly (bypasses service)
+final class ProductController extends Controller
+{
+    public function index(ProductRepository $repository): JsonResponse
+    {
+        return response()->json($repository->findActive());
+    }
+}
+```
+
+#### 4. Strategy / Policy
+- ✅ **SHOULD:** Use Strategy or Policy objects when behavior varies by configuration, environment, or domain rules (e.g., pricing rules, provider selection).  
+- ✅ **MUST:** Depend on interfaces for strategies, not concrete implementations.
+
+#### 5. DTO / Value Object
+- ✅ **SHOULD:** Use DTOs/value objects for cross‑layer communication when data becomes complex (e.g., SDK requests/responses, aggregated data).  
+- ✅ **MUST:** Prefer strongly‑typed DTOs over `array<string,mixed>` in public APIs wherever feasible.
+
+#### 6. Events + Jobs
+- ✅ **SHOULD:** Use domain Events to represent things that happened; use Jobs for async/long‑running work.  
+- ✅ **MUST:** Pass IDs/UUIDs into Jobs, not models (see Job Data Passing Policy).  
+- ✅ **SHOULD:** Let listeners stay thin and delegate heavy work to Jobs/Services.
+
+#### 7. Observers
+- ✅ **SHOULD:** Use Observers for simple model lifecycle side‑effects (logging, notifications, event dispatch).  
+- ✅ **MUST NOT:** Put complex business logic or external API calls directly in Observers; delegate to Services/Jobs.
+
+### ⚙️ Forbidden / Discouraged Patterns
+
+- ❌ **FORBIDDEN:** Business logic in Controllers or FormRequests.  
+- ❌ **FORBIDDEN:** Business logic in Eloquent Models (beyond simple accessors/casts/relations).  
+- ❌ **FORBIDDEN:** Repositories calling external APIs or other repositories.  
+- ❌ **FORBIDDEN:** “God services” that own multiple unrelated business domains.  
+- ❌ **FORBIDDEN:** Transaction scripts scattered across controllers/commands instead of encapsulated in Services.  
+- ❌ **FORBIDDEN:** Ad‑hoc patterns invented per feature when a documented pattern already exists.
+
+> **Implementation Details:** See [Laravel Components & Patterns Guide](../guides/laravel-components-patterns.md) and [Module Creation Guide](../guides/module-creation.md) for concrete examples of how these patterns are applied in Laravel code.
+
+---
+
 ## 12. API Documentation Standards
 
 ### 🎯 Principle: Living API Documentation
@@ -956,7 +1053,7 @@ Ensure next AI agent has clear understanding of what's been accomplished.
 - ✅ **MAY:** Completion status enables proper git hook processing (if configured)
 - ✅ **MAY:** Task completion feeds into automated documentation generation (if using docs automation)
 
-> **Implementation Details:** See [AI Workflow Guide](../guides/ai-development-workflow.md) for plan file formats and completion tracking procedures.
+> **Implementation Details:** See [AI Workflow](../ai-workflow.md) for plan file formats and completion tracking procedures.
 
 ---
 
@@ -1087,7 +1184,7 @@ Ultimate quality gate before public release.
 - ✅ **MUST:** Explicit acceptance criteria for each deliverable
 - ❌ **FORBIDDEN:** Ambiguous requirements that cause AI confusion
 
-> **Implementation Details:** See [AI Workflow Guide](../guides/ai-development-workflow.md) for detailed agent responsibilities and handoff procedures.
+> **Implementation Details:** See [AI Workflow](../ai-workflow.md) for detailed agent responsibilities and handoff procedures.
 
 ---
 
@@ -1218,6 +1315,7 @@ Design database indexes that support your query patterns.
 - ✅ **MUST:** Implement cache invalidation strategy for data consistency
 - ✅ **MUST:** Use appropriate cache TTL based on data volatility
 - ✅ **MUST:** Cache at multiple levels (application, database, HTTP)
+- ✅ **MUST:** Implement application‑level caching in the **Service layer** (or dedicated caching helpers used by Services), not in Repositories
 
 #### Asynchronous Processing:
 - ✅ **MUST:** Use Laravel queues for external API calls in request cycle
@@ -1372,6 +1470,6 @@ Throw specific exceptions with detailed context about what failed and why.
 
 ---
 
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+Copyright (c) 2025 Viet Vu  
+Company: JOOservices Ltd  
+Licensed under the MIT License.

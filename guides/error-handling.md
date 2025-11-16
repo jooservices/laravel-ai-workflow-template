@@ -393,16 +393,16 @@ Log::channel('external')->error('Service error', [
 **Format:** Strict structure with MANDATORY fields
 
 **Use Cases:**
-- WordPress API requests
-- LM Studio API requests
-- Twitter API requests
+- External CMS/API requests
+- AI/ML service requests (if applicable)
+- Social media API requests
 - Any third-party API
 
 **MANDATORY Fields:**
 ```php
 [
     'timestamp' => '2025-01-15T10:30:45.123Z',  // ISO 8601
-    'service' => 'lmstudio|wordpress|twitter|...',
+        'service' => 'external-service-name|ai-service|social-api|...',
     'method' => 'GET|POST|PUT|DELETE|PATCH',
     'endpoint' => '/v1/models',
     'base_url' => 'http://localhost:1234',
@@ -430,6 +430,20 @@ Log::channel('external')->error('Service error', [
 ```
 
 **Note:** Third-party request logging will be implemented in a separate plan. See [Third-Party Request Logging Plan](../plans/technical/2025-01-15-third-party-request-logging.md) for details.
+
+### Storage & Access Patterns
+
+- **Write Path (Application)**  
+  - Always log via Laravel channels (`Log::channel('action')`, `Log::channel('external')`, `Log::channel('third-party-requests')`, etc.).  
+  - Application code does **not** care whether logs end up in files, a central log system, or both—this is configured in `config/logging.php` and infrastructure.
+
+- **Read Path (Developers)**  
+  - In production, developers typically **cannot** SSH into servers to read log files.  
+  - Logs must be exposed via:
+    - A **central log system** (e.g., ELK, Loki, CloudWatch, Datadog) that ingests `storage/logs/*.log`.  
+    - Optionally, a **secure internal UI/API** backed by database tables (e.g., `audit_logs`, `third_party_logs`) for queryable audit/3rd‑party logs.
+
+> **Rule:** Write logs in a structured way; treat production log visibility as a platform concern (central logging, secure UI), not a reason to grant server access.
 
 ---
 
@@ -703,6 +717,6 @@ return ApiResponse::error(
 
 ---
 
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+Copyright (c) 2025 Viet Vu  
+Company: JOOservices Ltd  
+Licensed under the MIT License.

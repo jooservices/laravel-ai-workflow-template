@@ -1,4 +1,7 @@
-# Frontend Patterns Guide
+# Frontend Patterns Guide (Optional)
+
+> **Optional:** This guide assumes a Vue 3 + TypeScript + Inertia.js stack with Bootstrap and a dark theme.  
+> If your Laravel project uses a different frontend technology (or is API‑only), you can adapt these patterns or ignore this document.
 
 Complete guide to Vue 3, TypeScript, Inertia.js, and frontend architecture patterns following project standards.
 
@@ -621,5 +624,5 @@ defineProps<{
 ---
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+**Company: JOOservices Ltd**  
+Licensed under the MIT License.

@@ -1,4 +1,7 @@
-# AI Development Workflow - START HERE
+# AI Development Workflow (Optional)
+
+> **Optional:** This workflow is intended for teams using AI agents (e.g., local LM Studio, hosted LLMs) in their Laravel development process.  
+> If your project does not use AI agents, you can ignore this document or remove it in your fork.
 
 > **🤖 ALL AI AGENTS MUST READ THIS FIRST**  
 > This is your entry point to the JOOservices development workflow. Do not begin any work until you've completed the mandatory reading and understand your role.
@@ -16,7 +19,7 @@
 6. **`development/code-quality.md`** - Quality pipeline tools and configurations
 
 ### Phase 3: Specialized Guides
-7. **`guides/core-wordpress-sdk.md`** - WordPress integration examples (when relevant)
+7. **Module & integration guides** in `guides/` (REST APIs, module creation, components)
 8. **Domain-specific plans** in `plans/` folder - Current project requirements
 
 ## 🔄 Multi-Agent Pipeline
@@ -74,9 +77,9 @@
 - Master `reference/standards.md` for enforcement rules
 - Understand `development/code-quality.md` for tool expectations
 
-### Stage 4: LM Studio (Documentation Manager)
+### Stage 4: Documentation Tool (Documentation Manager)
 **Model Used:** [To Be Decided]
-**Role:** Automated documentation and changelog generation
+**Role:** Automated documentation and changelog generation (local or hosted documentation/AI tool)
 **Responsibilities:**
 - Monitor git hooks for completed tasks
 - Generate changelogs from plan completions
@@ -111,7 +114,7 @@ npm run build              # Production build succeeds
 - Plan files updated accurately
 - No quality tool violations
 
-### Documentation Sync (LM Studio):
+### Documentation Sync (Documentation Tool):
 - Plan completion status matches git commits
 - Changelog reflects actual implemented features
 - Documentation consistency maintained
@@ -454,14 +457,95 @@ Before committing each task:
 - ✅ Human can review progress at any time
 - ✅ Plan stays in sync with codebase
 
-## �🔗 Quick Navigation
+### AI Roles & Responsibilities
+
+This workflow assumes three primary AI roles: **Team Lead**, **Developer**, and **Reviewer**. A single AI session may play one or more roles, but it must always be clear which “hat” it is wearing.
+
+#### Role Overview
+
+| Role       | Primary Focus                                      | Main Responsibilities                                                                                 |
+|-----------|-----------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| Team Lead | Architecture, standards, planning                   | Define/maintain principles, patterns, and standards; design modules; own non‑functional requirements. |
+| Developer | Feature implementation within guardrails            | Implement features and refactors following all documented rules and patterns.                         |
+| Reviewer  | Quality and compliance gate before merge/approval   | Review changes for correctness, risks, and full compliance with architecture and standards.           |
+
+#### Team Lead – Scope & Duties
+
+- **Architecture & Vision**  
+  - Owns overall architecture (modules, layers, boundaries).  
+  - Chooses and documents patterns, tools, and non‑functional requirements (performance, security, observability).
+- **Standards & Documentation**  
+  - Maintains `architecture/principles.md`, `development/guidelines.md`, and `reference/standards.md`.  
+  - Decides what is **MUST / FORBIDDEN** and updates docs as the source of truth.  
+  - Proposes ADRs for significant architectural decisions.
+- **Planning & Workflow**  
+  - Breaks work into plans and tasks; defines AI stages and quality gates.  
+  - Aligns multi‑agent workflow with project goals.
+
+#### Developer – Scope & Duties
+
+- **Implementation**  
+  - Implement features, bug fixes, and refactors in the correct layers (Controllers, Services, Repositories, SDKs, Jobs, Events, Observers).  
+  - Apply the documented design patterns and follow the layer‑specific rules.
+- **Testing & Quality**  
+  - Write and update unit and feature tests; respect mocking and coverage standards.  
+  - Run quality tools (Pint, PHPStan, etc.) and fix issues before requesting review.
+- **Documentation & Plans**  
+  - Keep plan files up to date with progress.  
+  - Propose ADRs or documentation updates when implementation reveals gaps in standards.
+
+#### Reviewer – Scope & Duties
+
+- **Architecture & Layering Check**  
+  - Ensure changes respect the documented flow (Controller → Service → Repository/SDK → DB/API).  
+  - Verify no business logic leaks into Controllers/Models, and Repositories/Observers follow policies.
+- **Standards & Risk Check**  
+  - Confirm compliance with all MUST/FORBIDDEN rules (mocking, caching, constants, performance, security).  
+  - Check that tests are present, meaningful, and passing; look for N+1, missing validation/authorization, and unsafe external calls.
+- **Feedback & Approval**  
+  - Provide specific, actionable feedback; request changes when standards are not met.  
+  - Approve only when implementation, tests, and docs are aligned with the documented architecture.
+
+### Layer-Specific AI Checklist
+
+When an AI agent changes code (especially in Developer or Reviewer role), it must verify layer rules before proposing or committing changes:
+
+- **Controllers**  
+  - ✅ Handle HTTP concerns only (routing, request/response).  
+  - ✅ Use `FormRequest` for validation and authorization.  
+  - ✅ Call Services, not Repositories/SDKs, and return Resources/ApiResponse.  
+  - ❌ No business logic, no direct DB/Cache/Queue calls.
+
+- **Services**  
+  - ✅ Implement business rules and orchestration only.  
+  - ✅ Depend on Repository/SDK contracts, not concrete implementations.  
+  - ✅ Implement caching here (via `Cache` facade), not in Repositories.  
+  - ❌ No direct HTTP responses, no view rendering.
+
+- **Repositories**  
+  - ✅ Wrap Eloquent/query builder for a specific aggregate/root.  
+  - ✅ Handle DB reads/writes and simple query composition only.  
+  - ❌ No external API calls, no caching, no business rules.
+
+- **SDKs / External Integrations**  
+  - ✅ Wrap third‑party HTTP/API clients behind contracts.  
+  - ✅ Map external DTOs to internal DTOs/Value Objects.  
+  - ❌ No business rules; Services decide how results are used.
+
+- **Jobs, Events, Observers**  
+  - ✅ Jobs accept IDs/UUIDs and fetch models in `handle()`.  
+  - ✅ Events are immutable “something happened” messages.  
+  - ✅ Observers are thin; they log, dispatch events, or queue jobs.  
+  - ❌ No heavy business logic or external API calls directly in Observers or Events.
+
+## 🔗 Quick Navigation
 
 - **Engineering Principles:** [architecture/principles.md](architecture/principles.md)
 - **Implementation Guide:** [development/guidelines.md](development/guidelines.md)  
 - **Quick Reference:** [reference/standards.md](reference/standards.md)
 - **Service Patterns:** [architecture/flow.md](architecture/flow.md)
 - **Quality Tools:** [development/code-quality.md](development/code-quality.md)
-- **WordPress Integration:** [guides/core-wordpress-sdk.md](guides/core-wordpress-sdk.md)
+- **Modules & Integration Patterns:** See relevant guides under `guides/` (REST APIs, modules, components)
 
 ## 🚀 Getting Started Checklist
 
@@ -483,4 +567,4 @@ Before committing each task:
 
 **Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
 **Company: JOOservices Ltd**
-All rights reserved.
+Licensed under the MIT License.

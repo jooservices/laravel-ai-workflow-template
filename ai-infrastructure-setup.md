@@ -5,7 +5,10 @@ tags: ["AI Workflow","Local AI","Ollama","Copilot","GPT-4o","Hybrid Architecture
 featured_image_alt: "Hybrid AI dev setup — MacBook Pro with local GPU workstation"
 ---
 
-# AI-Augmented Dev Workflow 2025 — Hybrid Local Architecture
+# AI-Augmented Dev Workflow 2025 — Hybrid Local Architecture (Optional)
+
+> **Optional:** This is an example AI‑augmented development setup (MacBook + local GPU workstation + Ollama/hosted tools).  
+> Use it as inspiration if you rely on AI in your workflow, or ignore it if your project does not use AI tooling.
 
 **Executive summary**
 
@@ -114,23 +117,4 @@ This document describes a professional, zero-token AI development workflow desig
 ---
 
 ### Export / publishing
-- Use the provided Markdown for WordPress or LinkedIn.
-- Use the HTML for offline presentation; LANG toggle switches EN/VN.
-
----
-
-## Tags & metadata
-Tags: AI Workflow, Local AI, Ollama, Copilot, GPT-4o, Hybrid Architecture, Developer Productivity
-
-Meta description: A professional, zero-token AI development workflow combining MacBook Pro and a local GPU workstation with Ollama and Copilot to maximize privacy, performance and developer velocity.
-
----
-
-## Contact / credits
-Prepared by AI for a professional developer workflow — tailored for hybrid local architectures and zero-token operation.
-
----
-
-**Copyright (c) 2025 Viet Vu <jooservices@gmail.com>**
-**Company: JOOservices Ltd**
-All rights reserved.
+- You can reuse this document as a blog post, internal wiki page, or slide deck outline. Adapt the wording and tools (models, editors, services) to match your environment.
