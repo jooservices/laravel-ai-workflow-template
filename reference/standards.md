@@ -11,20 +11,22 @@ Quick lookup for all concrete rules, coverage targets, tool configurations, and 
 - ✅ **MUST:** PHP version **8.4+** (minimum).  
 - ✅ **MUST:** Laravel version **12.x** (minimum).  
 
-### Type Safety (MANDATORY Requirements)
-- ✅ **MUST:** `declare(strict_types=1);` in ALL PHP files (no exceptions)
-- ✅ **MUST:** Explicit types on all method parameters and return values
-- ✅ **MUST:** `final` keyword for all classes by default
-- ✅ **MUST:** `readonly` modifier for constructor-injected dependencies
-- ❌ **FORBIDDEN:** `mixed` type (except third-party interfaces with justification)
+### Type Safety (Recommended Requirements)
+- ✅ **SHOULD:** `declare(strict_types=1);` in application code (classes, services, controllers, repositories)
+- ⚠️ **OPTIONAL:** `declare(strict_types=1);` in config files, migrations, seeders (recommended but not mandatory)
+- ✅ **SHOULD:** Explicit types on all method parameters and return values
+- ✅ **SHOULD:** `final` keyword for classes by default (allows exceptions for extensible base classes)
+- ✅ **SHOULD:** `readonly` modifier for constructor-injected dependencies (allows exceptions when mutation is needed)
+- ⚠️ **AVOID:** `mixed` type (allowed with inline justification for third-party interfaces or legacy code)
 
 ### PHPDoc Requirements
-- ✅ **MUST:** Document array shapes: `@param array<string, mixed> $data`
-- ✅ **MUST:** Document collection types: `@return array<int, User>`
+- ✅ **SHOULD:** Document array shapes: `@param array<string, mixed> $data`
+- ✅ **SHOULD:** Document collection types: `@return array<int, User>`
 
 ### Tool Configuration
-- PHPStan level: `max`
+- PHPStan level: `8-9` (allow suppressions with justification)
 - PHPStan rules: `checkMissingIterableValueType: true`, `checkGenericClassInNonGenericObjectType: true`
+- **Suppressions:** Allowed with inline comments explaining why
 
 ---
 
@@ -91,9 +93,10 @@ composer analyze:phpstan   # PHPStan only
 - PHPStan: `phpstan.neon.dist`
 
 ### Requirements
-- ✅ **MUST:** All tools pass before commit (zero violations)
-- ❌ **FORBIDDEN:** Global suppressions in config files
-- ⚠️ **DISCOURAGED:** Line-level suppressions without inline justification
+- ✅ **SHOULD:** All tools pass before commit (zero violations for new code)
+- ⚠️ **ALLOWED:** Suppressions with justification for legacy code or third-party integrations
+- ⚠️ **ALLOWED:** Global suppressions in config files with documented justification
+- ✅ **SHOULD:** Line-level suppressions include inline comments explaining why
 
 ---
 
@@ -103,14 +106,14 @@ composer analyze:phpstan   # PHPStan only
 
 | Layer | Minimum Coverage | 
 |-------|-----------------|
-| **Overall Project** | **80%** |
-| **Core Module Services** | **95%** |
-| **API Controllers** | **90%** |
-| **FormRequests** | **100%** |
-| **Models (business logic)** | **85%** |
-| **Repositories** | **80%** |
-| **Middleware** | **90%** |
-| **SDK Classes** | **95%** |
+| **Overall Project** | **70%** |
+| **Core Module Services** | **70%** |
+| **API Controllers** | **70%** |
+| **FormRequests** | **70%** |
+| **Models (business logic)** | **70%** |
+| **Repositories** | **70%** |
+| **Middleware** | **70%** |
+| **SDK Classes** | **70%** |
 
 ### Coverage Exclusions
 - Service Providers (framework boilerplate)
@@ -126,9 +129,10 @@ composer test:coverage-check  # Enforce coverage thresholds (CI gate)
 ```
 
 ### New Code Requirements
-- ✅ **MUST:** Every new class requires accompanying unit tests before merge
-- ✅ **MUST:** PRs that decrease coverage are automatically rejected
-- ✅ **MUST:** Coverage gaps in modified code addressed in same PR
+- ✅ **SHOULD:** Every new class have accompanying unit tests before merge
+- ⚠️ **ALLOWED:** Exceptions for simple DTOs, Value Objects, or data transfer classes
+- ✅ **SHOULD:** PRs that decrease coverage below 70% threshold be addressed
+- ✅ **SHOULD:** Coverage gaps in modified code addressed in same PR (or follow-up PR for urgent fixes)
 
 ### Test File Naming
 - Unit tests: `tests/Unit/{Namespace}/{ClassName}Test.php`

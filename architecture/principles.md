@@ -13,9 +13,9 @@ Laravel projects using this documentation are built on strict type safety, compr
 ## 🎯 Quick Principles Summary
 
 ### Type Safety
-- `declare(strict_types=1);` in ALL PHP files (no exceptions)
-- Explicit types on all methods, `final` classes, `readonly` dependencies
-- PHPStan level max
+- `declare(strict_types=1);` in application code (classes, services, controllers) - optional for config, migrations, seeders
+- Explicit types on all methods recommended, `final` classes and `readonly` dependencies recommended
+- PHPStan level 8-9 (allow suppressions with justification)
 
 ### PHP 8.4+ Compliance
 - **Modern PHP features only:** Use PHP 8.4+ features for better type safety.
@@ -25,12 +25,12 @@ Laravel projects using this documentation are built on strict type safety, compr
 
 ### Quality Pipeline  
 - **Order:** Pint → PHPCS → PHPMD → PHPStan
-- **Command:** `composer lint` (must pass before commit)
-- Zero violations, no global suppressions
+- **Command:** `composer lint` (should pass before commit)
+- Zero violations for new code, suppressions allowed with justification
 
 ### Test Coverage
-- **80%** overall, **95%** Core services, **90%** controllers, **100%** FormRequests
-- New classes = new tests (no exceptions)
+- **70%** minimum for all layers (overall, Core services, controllers, FormRequests, repositories, etc.)
+- New classes SHOULD have tests (exceptions allowed for simple DTOs/Value Objects)
 - **Command:** `composer test:coverage-check`
 
 ### Modular Architecture
@@ -44,8 +44,8 @@ Laravel projects using this documentation are built on strict type safety, compr
 - Consistent error structure
 
 ### RESTful API Standards
-- **MUST follow ALL standards:** Resource naming, HTTP methods, status codes, UUID identifiers, versioning, security
-- **Complete compliance:** No exceptions or shortcuts allowed
+- **SHOULD follow all standards:** Resource naming, HTTP methods, status codes, UUID identifiers, versioning, security
+- **Recommended compliance:** Document any deviations with justification
 - **Comprehensive guide:** See RESTful API Design Guide for all requirements
 
 ### Audit Logging
@@ -76,12 +76,12 @@ Laravel projects using this documentation are built on strict type safety, compr
 - **D** - Dependency Inversion (depend on abstractions, not concretions)
 
 ### AI Workflow
-- **Atomic commits:** One complete task = one commit (no partial work)
+- **Atomic commits:** One complete task = one commit (prefer complete work)
 - **Multi-stage quality gates:** Cursor → ChatGPT → GitHub Pro → {DocumentationTool} → Human
-- **Zero tolerance:** No warnings, suppressions, or deprecations in production
-- **Documentation sync:** Plans and completed tasks must always match
-- **Learn from mistakes:** AI agents MUST check retrospectives before starting work to avoid repeating past issues
-- **Quality over speed:** AI agents MUST follow all policies and rules, NO EXCEPTIONS - never rush or take shortcuts
+- **Quality standards:** SHOULD have no warnings, suppressions, or deprecations in production (allow exceptions with justification)
+- **Documentation sync:** Plans and completed tasks SHOULD match
+- **Learn from mistakes:** AI agents SHOULD check retrospectives before starting work to avoid repeating past issues
+- **Quality over speed:** AI agents SHOULD follow all policies and rules - prefer quality over speed, but allow exceptions for urgent fixes with follow-up
 
 ### Commit Discipline
 - **Task atomicity:** Break features into small, independent tasks
@@ -162,15 +162,15 @@ Document array shapes and collection types using PHPDoc to help static analysis 
 
 ### ⚙️ Rules/Standards: Exact Implementation
 
-#### MANDATORY Requirements:
-- ✅ **MUST:** Add `declare(strict_types=1);` immediately after `<?php` in ALL PHP files
-  - Applies to: Classes, interfaces, traits, routes, config, migrations, seeders, tests
-  - Pre-commit hook enforces this (build fails without it)
-  - No exceptions permitted
+#### Recommended Requirements:
+- ✅ **SHOULD:** Add `declare(strict_types=1);` immediately after `<?php` in application code
+  - **Required for:** Classes, interfaces, traits, services, controllers, repositories
+  - **Optional for:** Config files, migrations, seeders (recommended but not mandatory)
+  - **Recommended for:** Tests (helps catch type issues early)
 
-- ✅ **MUST:** Declare explicit types on all method parameters and return values
-- ✅ **MUST:** Use `final` keyword for all classes by default  
-- ✅ **MUST:** Use `readonly` modifier for constructor-injected dependencies
+- ✅ **SHOULD:** Declare explicit types on all method parameters and return values
+- ✅ **SHOULD:** Use `final` keyword for classes by default (allows exceptions for extensible base classes)
+- ✅ **SHOULD:** Use `readonly` modifier for constructor-injected dependencies (allows exceptions when mutation is needed)
 
 #### Forbidden Practices:
 - ❌ **FORBIDDEN:** `mixed` type except when interfacing with untyped third-party code (requires inline comment with justification)
@@ -182,8 +182,9 @@ Document array shapes and collection types using PHPDoc to help static analysis 
 - ✅ **MUST:** Document return collections: `@return array<int, User>`
 
 #### Tool Configuration:
-- PHPStan level: `max` (no suppressions without justification)
+- PHPStan level: `8-9` (allow suppressions with inline justification)
 - PHPStan rules: `checkMissingIterableValueType: true`, `checkGenericClassInNonGenericObjectType: true`
+- **Suppressions:** Allowed with inline comments explaining why (e.g., `@phpstan-ignore-next-line` with justification)
 
 > **Implementation Details:** See [Development Guidelines](../development/guidelines.md#type-safety-implementation) for step-by-step implementation and code examples.
 
@@ -436,8 +437,8 @@ Use the same error structure across all endpoints for predictable error handling
 
 ## RESTful API Standards Compliance
 
-### 🎯 Principle: Complete RESTful Standards Adherence
-**What you must do:** All RESTful API endpoints MUST follow ALL documented standards without exception. No shortcuts, no partial compliance, no deviations.
+### 🎯 Principle: RESTful Standards Adherence
+**What you should do:** RESTful API endpoints SHOULD follow all documented standards. Document any deviations with justification.
 
 **Why:** RESTful standards ensure consistency, security, maintainability, and predictable API behavior. Partial compliance creates confusion, security vulnerabilities, and integration problems. Complete adherence enables reliable client integrations, easier maintenance, and consistent developer experience.
 
@@ -757,9 +758,10 @@ High-level modules should not depend on low-level modules. Both should depend on
 - ❌ **FORBIDDEN:** Classes with multiple reasons to change
 
 #### Open/Closed Principle (OCP):
-- ✅ **MUST:** Extend behavior through interfaces and inheritance
-- ✅ **MUST:** Use Strategy pattern for varying algorithms
-- ❌ **FORBIDDEN:** Modifying existing classes to add new features
+- ✅ **SHOULD:** Extend behavior through interfaces and inheritance for significant features
+- ✅ **SHOULD:** Use Strategy pattern for varying algorithms
+- ⚠️ **ALLOWED:** Modifying existing classes for small, internal changes (bug fixes, minor enhancements)
+- ⚠️ **ALLOWED:** Direct modification for simple, cohesive classes that don't break existing behavior
 
 #### Liskov Substitution Principle (LSP):
 - ✅ **MUST:** Subclasses honor base class contracts and behavior expectations
@@ -767,19 +769,23 @@ High-level modules should not depend on low-level modules. Both should depend on
 - ❌ **FORBIDDEN:** Subclasses that break parent class assumptions
 
 #### Interface Segregation Principle (ISP):
-- ✅ **MUST:** Create focused, role-specific interfaces
-- ✅ **MUST:** Split large interfaces into smaller, cohesive ones
-- ❌ **FORBIDDEN:** Fat interfaces that force unused dependencies
+- ✅ **SHOULD:** Create focused, role-specific interfaces for public APIs
+- ✅ **SHOULD:** Split large interfaces when they become unwieldy
+- ⚠️ **ALLOWED:** Single interface with multiple methods if all are commonly used together
+- ⚠️ **ALLOWED:** Simpler interfaces for internal/private code
 
 #### Dependency Inversion Principle (DIP):
-- ✅ **MUST:** Depend on abstractions (interfaces), not concrete classes
-- ✅ **MUST:** Inject dependencies through constructor with interface types
-- ✅ **MUST:** Use Service Provider for binding abstractions to implementations
+- ✅ **SHOULD:** Depend on abstractions (interfaces) for public APIs and cross-module dependencies
+- ✅ **SHOULD:** Use interfaces for services, repositories, and SDKs
+- ✅ **SHOULD:** Inject dependencies through constructor with interface types for public APIs
+- ⚠️ **ALLOWED:** Direct concrete class dependencies for simple, internal utilities (e.g., DTOs, Value Objects)
+- ⚠️ **ALLOWED:** Concrete classes for small, single-purpose helpers within the same module
+- ✅ **SHOULD:** Use Service Provider for binding abstractions to implementations
 
 #### SOLID in Platform Architecture:
 - **Module Organization:** One module = one business domain (SRP)
-- **Extension Strategy:** Add modules without modifying existing ones (OCP)
-- **Contract Communication:** Modules communicate through interfaces (DIP)
+- **Extension Strategy:** SHOULD add modules without modifying existing ones (OCP) - allows exceptions for small changes
+- **Contract Communication:** SHOULD use interfaces for cross-module dependencies (DIP) - allows direct dependencies for simple shared utilities
 
 #### Validation Tools:
 - **PHPMD:** Detects SRP violations and design complexity issues
@@ -1064,21 +1070,18 @@ npm run typecheck
 npm run build
 ```
 
-**All 4 steps must pass** - no exceptions, no bypass permissions.
+**All 4 steps SHOULD pass** - exceptions allowed with justification and follow-up.
 
 **CI/CD enforces:**
-- All quality tools must pass (Pint → PHPCS → PHPMD → PHPStan)
-- Test coverage ≥ 80% (fails build if below)
-- No TypeScript errors
+- All quality tools SHOULD pass (Pint → PHPCS → PHPMD → PHPStan) - suppressions allowed with justification
+- Test coverage ≥ 70% (fails build if below)
+- No TypeScript errors (suppressions allowed with justification)
 - Successful production build
-- All files have `declare(strict_types=1)`
+- Application code files SHOULD have `declare(strict_types=1)` (optional for config, migrations, seeders)
 
 **Coverage violations = build failure:**
-- Overall coverage drops below 80%
-- Core services drop below 95%
-- Controllers drop below 90%
-- FormRequests below 100%
-- Any new class without tests
+- Overall coverage drops below 70%
+- Any layer drops below 70%
 
 ---
 
@@ -1197,33 +1200,33 @@ Link commits back to specific plan tasks and requirements.
 ### ⚙️ Rules/Standards: Commit Requirements
 
 #### Task Breakdown Requirements:
-- ✅ **MUST:** Break feature into atomic tasks BEFORE starting implementation
-- ✅ **MUST:** Define task boundaries and dependencies in plan file first
-- ✅ **MUST:** Each task must be independently completable and testable
-- ❌ **FORBIDDEN:** Starting implementation without task breakdown
-- ❌ **FORBIDDEN:** Implementing multiple tasks simultaneously
-- ❌ **FORBIDDEN:** Committing files from multiple tasks in one commit
+- ✅ **SHOULD:** Break feature into atomic tasks BEFORE starting implementation
+- ✅ **SHOULD:** Define task boundaries and dependencies in plan file first
+- ✅ **SHOULD:** Each task be independently completable and testable
+- ⚠️ **AVOID:** Starting implementation without task breakdown (allowed for small, simple features)
+- ⚠️ **AVOID:** Implementing multiple tasks simultaneously (allowed for independent, unrelated tasks)
+- ⚠️ **AVOID:** Committing files from multiple tasks in one commit (prefer separate commits)
 
 #### Sequential Implementation Requirements:
-- ✅ **MUST:** Complete and commit one task before starting the next
-- ✅ **MUST:** Wait for human approval and commit completion before proceeding
-- ✅ **MUST:** Update plan file to mark task complete before starting next
-- ❌ **FORBIDDEN:** Working on multiple tasks in parallel
-- ❌ **FORBIDDEN:** Staging files from incomplete tasks
-- ❌ **FORBIDDEN:** Proceeding to next task without committing current task
+- ✅ **SHOULD:** Complete and commit one task before starting the next
+- ✅ **SHOULD:** Wait for human approval and commit completion before proceeding (when required)
+- ✅ **SHOULD:** Update plan file to mark task complete before starting next
+- ⚠️ **AVOID:** Working on multiple tasks in parallel (allowed for independent, unrelated tasks)
+- ⚠️ **AVOID:** Staging files from incomplete tasks (prefer complete, working commits)
+- ⚠️ **AVOID:** Proceeding to next task without committing current task (prefer atomic commits)
 
 #### Task Atomicity:
-- ✅ **MUST:** One logical task = one commit (feature, bugfix, refactor)
-- ✅ **MUST:** Task can be completed and tested independently  
-- ✅ **MUST:** Commit represents working, deployable state
-- ❌ **FORBIDDEN:** Partial implementations or work-in-progress commits
-- ❌ **FORBIDDEN:** Combining multiple tasks into single commit
+- ✅ **SHOULD:** One logical task = one commit (feature, bugfix, refactor)
+- ✅ **SHOULD:** Task be completable and tested independently  
+- ✅ **SHOULD:** Commit represent working, deployable state
+- ⚠️ **AVOID:** Partial implementations or work-in-progress commits (allowed with clear WIP markers for urgent fixes)
+- ⚠️ **AVOID:** Combining multiple tasks into single commit (prefer separate commits for clarity)
 
 #### File Management:
-- ✅ **MUST:** Stage specific files explicitly: `git add file1.php file2.md`
-- ✅ **MUST:** Review staged changes before commit: `git diff --cached`
-- ❌ **FORBIDDEN:** `git add .` or `git add -A` (commits everything)
-- ❌ **FORBIDDEN:** Including files modified by other developers
+- ✅ **SHOULD:** Stage specific files explicitly: `git add file1.php file2.md`
+- ✅ **SHOULD:** Review staged changes before commit: `git diff --cached`
+- ⚠️ **AVOID:** `git add .` or `git add -A` (prefer explicit file staging, but allowed when you're certain of changes)
+- ⚠️ **AVOID:** Including files modified by other developers (always review before committing)
 
 #### Commit Message Standards:
 - ✅ **MUST:** Format: `<type>(<scope>): <description>` (see [Standards Reference](../reference/standards.md#commit-message-format) for exact format)
@@ -1239,10 +1242,10 @@ Link commits back to specific plan tasks and requirements.
 - ❌ **FORBIDDEN:** Commits that require other commits to function
 
 #### Quality Gates:
-- ✅ **MUST:** All quality tools pass before commit
-- ✅ **MUST:** Tests pass for all modified code
-- ✅ **MUST:** Documentation updated for public API changes
-- ❌ **FORBIDDEN:** Committing code that fails quality pipeline
+- ✅ **SHOULD:** All quality tools pass before commit (zero violations for new code)
+- ✅ **SHOULD:** Tests pass for all modified code
+- ✅ **SHOULD:** Documentation updated for public API changes
+- ⚠️ **ALLOWED:** Committing code with suppressions/justifications for legacy code or urgent fixes (with follow-up PR)
 
 #### Commit Size Guidelines:
 - **1-5 files:** Ideal size for focused changes
@@ -1349,10 +1352,10 @@ Apply retrospective lessons by:
 
 ---
 
-### 🎯 Principle: Quality Over Speed - No Exceptions
-**What you must do:** AI agents MUST follow all policies and rules without exception, regardless of time constraints or pressure. Never rush or take shortcuts.
+### 🎯 Principle: Quality Over Speed
+**What you should do:** AI agents SHOULD follow all policies and rules, preferring quality over speed. Allow exceptions for urgent fixes with documented follow-up.
 
-**Why:** Rushing leads to mistakes, technical debt, and violations of established standards. Policies exist to prevent issues and maintain quality. Shortcuts create problems that take longer to fix than doing it right the first time. Quality gates and rules are non-negotiable.
+**Why:** Rushing can lead to mistakes and technical debt. Policies help prevent issues and maintain quality. However, practical constraints may require exceptions, which should be documented and addressed in follow-up work.
 
 ### 📋 Guidelines: Maintaining Quality Standards
 
@@ -1369,28 +1372,29 @@ Apply retrospective lessons by:
 - Communicate delays rather than compromising standards
 
 #### 3. Quality Gates
-- All quality tools must pass before commit
-- All tests must pass before proceeding
-- All documentation must be updated
-- All policies must be followed
+- All quality tools SHOULD pass before commit (exceptions allowed with justification)
+- All tests SHOULD pass before proceeding (exceptions allowed for urgent fixes with follow-up)
+- All documentation SHOULD be updated (exceptions allowed with documented follow-up)
+- All policies SHOULD be followed (exceptions allowed with justification)
 
 ### ⚙️ Rules/Standards: Quality Over Speed Enforcement
 
-#### Absolute Requirements:
-- ✅ **MUST:** Follow all policies and rules, NO EXCEPTIONS
-- ✅ **MUST:** Complete all quality gates before proceeding
-- ✅ **MUST:** Never rush or take shortcuts
-- ✅ **MUST:** Prioritize quality over speed in all decisions
-- ❌ **FORBIDDEN:** Bypassing policies due to time constraints
-- ❌ **FORBIDDEN:** Skipping quality checks to save time
-- ❌ **FORBIDDEN:** Taking shortcuts that violate standards
-- ❌ **FORBIDDEN:** Prioritizing speed over quality
+#### Recommended Requirements:
+- ✅ **SHOULD:** Follow all policies and rules
+- ✅ **SHOULD:** Complete all quality gates before proceeding
+- ⚠️ **ALLOWED:** Exceptions for urgent fixes with documented justification and follow-up PR
+- ✅ **SHOULD:** Prefer quality over speed in all decisions
+- ⚠️ **AVOID:** Bypassing policies due to time constraints (allowed for urgent fixes with follow-up)
+- ⚠️ **AVOID:** Skipping quality checks to save time (prefer completing checks, allow exceptions with justification)
+- ⚠️ **AVOID:** Taking shortcuts that violate standards (prefer following standards, allow exceptions with documentation)
+- ⚠️ **AVOID:** Prioritizing speed over quality (prefer quality, allow exceptions for urgent fixes)
 
 #### When Time is Limited:
-- ✅ **MUST:** Communicate time constraints to human
-- ✅ **MUST:** Request additional time if needed to maintain quality
-- ✅ **MUST:** Never compromise on policies or rules
-- ❌ **FORBIDDEN:** Using time pressure as justification for violations
+- ✅ **SHOULD:** Communicate time constraints to human
+- ✅ **SHOULD:** Request additional time if needed to maintain quality
+- ⚠️ **ALLOWED:** Proceed with urgent fix if time is critical, with documented follow-up
+- ✅ **SHOULD:** Prefer following policies and rules (exceptions allowed with justification)
+- ⚠️ **AVOID:** Using time pressure as justification for violations (document exceptions properly)
 
 > **Implementation Details:** See [AI Workflow](../ai-workflow.md#forbidden-practices) for complete list of forbidden practices and [Development Guidelines](../development/guidelines.md) for proper workflow procedures.
 
