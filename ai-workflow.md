@@ -4,7 +4,12 @@
 > If your project does not use AI agents, you can ignore this document or remove it in your fork.
 
 > **🤖 ALL AI AGENTS MUST READ THIS FIRST**  
-> This is your entry point to the JOOservices development workflow. Do not begin any work until you've completed the mandatory reading and understand your role.
+> This is your entry point to the Laravel development workflow. Do not begin any work until you've completed the mandatory reading and understand your role.
+
+> **📚 Documentation Hierarchy:**  
+> This document is part of the **global documentation** (submodule at `./docs/`). Projects may have **local documentation** in `./doc/` (singular) that can override global standards. Always check both global and local documentation before starting work. If local documentation doesn't exist, follow global only.
+>
+> **⚠️ CRITICAL RULE:** **NEVER modify files inside `./docs/` submodule** - it is read-only (NO EXCEPTIONS). All overrides MUST be done via local documentation in `./doc/` only.
 
 ## 📚 Mandatory Reading Order
 
@@ -20,7 +25,22 @@
 
 ### Phase 3: Specialized Guides
 7. **Module & integration guides** in `guides/` (REST APIs, module creation, components)
-8. **Domain-specific plans** in `plans/` folder - Current project requirements
+8. **Domain-specific plans** in `doc/plans/` folder (local) - Current project requirements
+   - Note: `docs/plans/` in submodule is template only. Actual plans are in `doc/plans/` (local).
+
+### Phase 4: Learning from Past Issues (MANDATORY)
+9. **`retrospectives/` folder** - **MUST READ BEFORE STARTING ANY WORK**
+   - Review all retrospectives to understand past issues and failures
+   - Learn from documented mistakes and prevent repeating them
+   - Check for similar patterns in your current work
+   - **ABSOLUTE RULE:** AI agents MUST check retrospectives to avoid repeating past issues
+
+### Phase 5: Local Documentation (Project-Specific)
+10. **Local documentation** in `./doc/` (singular, outside submodule) - **MUST CHECK**
+    - Review project-specific `doc/plans/`, `doc/decisions/`, `doc/retrospectives/` in the consuming project
+    - Check for project-specific overrides or extensions to global standards
+    - **ABSOLUTE RULE:** Local documentation can override global - always check both
+    - **IMPORTANT:** If `./doc/` doesn't exist, follow global documentation only
 
 ## 🔄 Multi-Agent Pipeline
 
@@ -34,9 +54,11 @@
 - Break down features into AI-implementable units
 
 **Required Reading Focus:**
-- Complete mandatory reading (all 8 documents)
+- Complete mandatory reading (all 10 documents including retrospectives and local docs)
 - Deep focus on `architecture/` folder for decision-making context
-- Review existing `plans/` to understand project direction
+- **MUST review `retrospectives/` folder** (both global and local) to learn from past issues
+- **MUST check local documentation** (`./doc/plans/`, `./doc/decisions/`) for project-specific context (if exists)
+- Review existing `doc/plans/` (local) to understand project direction
 
 ### Stage 2: ChatGPT Plus (Full Stack Developer)
 **Model Used:** [To Be Decided]
@@ -49,7 +71,9 @@
 - Hand off completed work to GitHub Pro
 
 **Required Reading Focus:**
-- Complete mandatory reading (all 8 documents)
+- Complete mandatory reading (all 10 documents including retrospectives and local docs)
+- **MUST review `retrospectives/` folder** (both global and local) before starting implementation
+- **MUST check local documentation** (`./doc/plans/`, `./doc/decisions/`) for project-specific requirements (if exists)
 - Deep focus on `development/guidelines.md` for implementation patterns
 - Master `reference/standards.md` for exact requirements
 - Review `architecture/flow.md` for service layer patterns
@@ -72,7 +96,9 @@
 - Ensure consistency with project patterns
 
 **Required Reading Focus:**
-- Complete mandatory reading (all 8 documents)
+- Complete mandatory reading (all 10 documents including retrospectives and local docs)
+- **MUST review `retrospectives/` folder** (both global and local) to identify patterns that caused past issues
+- **MUST check local documentation** (`./doc/decisions/`, `./doc/retrospectives/`) for project-specific standards (if exists)
 - Deep focus on `architecture/principles.md` for validation criteria
 - Master `reference/standards.md` for enforcement rules
 - Understand `development/code-quality.md` for tool expectations
@@ -122,15 +148,20 @@ npm run build              # Production build succeeds
 ## 🎯 Decision Making Framework
 
 ### When Implementing Features:
-1. **Check principles first:** Does this align with documented engineering decisions?
-2. **Follow established patterns:** Use examples from guidelines, don't invent new approaches
-3. **Reference standards:** Look up exact requirements rather than guessing
-4. **Validate against quality gates:** Ensure all tools pass before commit
+1. **Check local documentation FIRST (if exists):** Review project-specific `./doc/plans/`, `./doc/decisions/`, `./doc/retrospectives/` for project context
+   - If `./doc/` doesn't exist, skip this step and follow global only
+2. **Check retrospectives:** Review both global (`docs/retrospectives/`) and local (`doc/retrospectives/`) folders for similar issues or patterns that caused problems
+3. **Check principles:** Does this align with documented engineering decisions (global + local if exists)?
+4. **Follow established patterns:** Use examples from guidelines, don't invent new approaches
+5. **Reference standards:** Look up exact requirements rather than guessing (check both global and local if exists)
+6. **Validate against quality gates:** Ensure all tools pass before commit
 
 ### When Unclear or Conflicting Information:
-1. **Reference documentation hierarchy:** Principles > Guidelines > Standards
-2. **Look for similar examples:** Check existing code and patterns
-3. **Escalate to human:** If documentation conflicts or gaps exist
+1. **MUST verify with human** before taking any action
+2. **Reference documentation hierarchy:** Principles > Guidelines > Standards
+3. **Look for similar examples:** Check existing code and patterns
+4. **Escalate to human:** If documentation conflicts or gaps exist
+5. **Never assume or guess** - always ask human for clarification
 
 ### Forbidden Practices:
 - ❌ **Never assume requirements** - always reference documentation
@@ -140,6 +171,9 @@ npm run build              # Production build succeeds
 - ❌ **NEVER commit without explicit human approval** - AI agents MUST ask and wait
 - ❌ **NEVER assume approval from previous messages** - Always ask after implementation, regardless of previous message patterns
 - ❌ **NEVER commit based on pattern matching** - Only commit when human explicitly approves
+- ❌ **NEVER skip retrospectives review** - MUST check `retrospectives/` folder before starting work to avoid repeating past issues
+- ❌ **NEVER rush or take shortcuts** - MUST follow all policies and rules, NO EXCEPTIONS
+- ❌ **NEVER prioritize speed over quality** - Policies and rules take precedence over time constraints
 
 ## 🚫 CRITICAL: Commit Authorization
 
@@ -225,7 +259,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-1
-Plan: docs/plans/features/2025-11-14-user-authentication.md
+Plan: doc/plans/features/2025-11-14-user-authentication.md
 Coverage: 85%"
    ```
 
@@ -253,7 +287,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-1
-Plan: docs/plans/features/2025-11-14-user-authentication.md
+Plan: doc/plans/features/2025-11-14-user-authentication.md
 Coverage: 85%"
 ```
 
@@ -373,7 +407,7 @@ Always include plan file in the same commit:
 # Stage code + tests + plan file together
 git add app/Models/User.php \
         tests/Unit/Models/UserTest.php \
-        docs/plans/technical/2025-11-12-user-auth.md
+        doc/plans/technical/2025-11-12-user-auth.md
 ```
 
 #### 5. Reference in Commit Message
@@ -390,10 +424,10 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-1
-Plan: docs/plans/features/2025-11-14-user-authentication.md
+Plan: doc/plans/features/2025-11-14-user-authentication.md
 Coverage: 85%
 
-Refs: docs/plans/technical/2025-11-12-user-auth.md"
+Refs: doc/plans/technical/2025-11-12-user-auth.md"
 ```
 
 ### Complete Example Workflow:
@@ -409,7 +443,7 @@ AI: [Changes - [ ] to - [x], adds completion metadata]
 # 2. Stage code + plan together
 AI: git add app/Models/User.php \
            tests/Unit/Models/UserTest.php \
-           docs/plans/technical/2025-11-12-user-auth.md
+           doc/plans/technical/2025-11-12-user-auth.md
 
 # 3. Ask for approval
 AI: "Ready to commit? Task A1 complete: User model with validation
@@ -436,7 +470,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-1
-Plan: docs/plans/features/2025-11-14-user-authentication.md
+Plan: doc/plans/features/2025-11-14-user-authentication.md
 Coverage: 85%"
 ```
 

@@ -94,20 +94,23 @@ This guide explains the purpose and organization of each directory within the do
 
 ---
 
-## 📋 `/docs/plans/` - Implementation Plans
+## 📋 `/docs/plans/` - Implementation Plans (Template Structure Only)
 
-**Purpose:** Project planning documents organized by type and date.
+> **Important:** The `docs/plans/` folder in the submodule is a **template structure only** (examples).  
+> Your **actual project plans** must be located in `doc/plans/` (local, outside submodule).
+
+**Purpose:** Template structure showing how to organize project planning documents.
 
 **Structure:**
 ```
 plans/
-├── technical/      # Technical implementation plans
-└── features/       # Feature and product plans
+├── technical/      # Technical implementation plans (template examples)
+└── features/       # Feature and product plans (template examples)
 ```
 
-### `/docs/plans/technical/` - Technical Plans
+### `/docs/plans/technical/` - Technical Plans (Template)
 
-**Purpose:** Implementation-focused plans for:
+**Purpose:** Template examples for implementation-focused plans:
 - Code refactoring and improvements
 - Infrastructure changes
 - Developer tooling
@@ -116,14 +119,11 @@ plans/
 
 **File Naming:** `YYYY-MM-DD-{plan-name}.md`
 
-**Examples:**
-- `2025-11-12-strict-types-enforcement.md`
-- `2025-11-13-external-sdk-integration.md`
-- `2025-11-14-core-http-client.md`
+**Note:** These are template examples. Your actual technical plans go in `doc/plans/technical/` (local).
 
-### `/docs/plans/features/` - Feature Plans
+### `/docs/plans/features/` - Feature Plans (Template)
 
-**Purpose:** Product-focused plans for:
+**Purpose:** Template examples for product-focused plans:
 - New user features
 - UI/UX improvements
 - Business logic changes
@@ -132,11 +132,9 @@ plans/
 
 **File Naming:** `YYYY-MM-DD-{plan-name}.md`
 
-**Examples:**
-- `2025-11-14-ai-content-suite.md`
-- `2025-11-14-home-welcome-text-readability.md`
+**Note:** These are template examples. Your actual feature plans go in `doc/plans/features/` (local).
 
-**Plan Structure:**
+**Plan Structure (applies to both template and actual plans):**
 - Status, Owner, Created/Updated dates
 - Summary and Objectives
 - Tasks with Definition of Done
@@ -144,12 +142,15 @@ plans/
 
 ---
 
-## 📝 `/docs/decisions/` - Architecture Decision Records (ADRs)
+## 📝 `/docs/decisions/` - Architecture Decision Records (ADRs) - Template/Examples
 
-**Purpose:** Documents key technical decisions and their rationale.
+> **Note:** The `docs/decisions/` folder in the submodule contains template/examples.  
+> Your **actual project ADRs** go in `doc/decisions/` (local, outside submodule).
 
-**Contents:**
-- `2025-11-13-lm-studio-api.md` - Why we chose LM Studio over alternatives
+**Purpose:** Template examples showing how to document key technical decisions and their rationale.
+
+**Contents (in submodule):**
+- Example ADRs showing format and structure
 - `README.md` - ADR format and guidelines
 
 **When to Use:**
@@ -166,19 +167,24 @@ plans/
 
 **File Naming:** `YYYY-MM-DD-decision-title.md`
 
+**Note:** Your actual project ADRs go in `doc/decisions/` (local).
+
 ---
 
-## 🔍 `/docs/retrospectives/` - Post-Mortems & Lessons Learned
+## 🔍 `/docs/retrospectives/` - Post-Mortems & Lessons Learned - Template/Examples
 
-**Purpose:** Documents what went wrong, how it was fixed, and lessons learned.
+> **Note:** The `docs/retrospectives/` folder in the submodule contains general lessons/templates.  
+> Your **actual project-specific retrospectives** go in `doc/retrospectives/` (local, outside submodule).
 
-**Contents:**
-- `inertia-progress-regression.md` - SPA bootstrap failure analysis
-- `2025-11-15-lm-studio-workflow-violations.md` - Workflow violation lessons
+**Purpose:** Template examples and general lessons learned from past issues.
+
+**Contents (in submodule):**
+- Example retrospectives showing format and structure
 - `README.md` - Retrospective template and guidelines
+- General lessons applicable to any project
 
 **When to Use:**
-- Learning from past issues
+- Learning from past issues (both global and local)
 - Understanding failure modes
 - Preventing similar problems
 
@@ -189,6 +195,10 @@ plans/
 - Fix
 - Lessons Learned
 - Action Items
+
+**Note:** 
+- Global retrospectives (`docs/retrospectives/`) = General lessons/templates
+- Local retrospectives (`doc/retrospectives/`) = Project-specific issues
 
 ---
 
@@ -304,15 +314,18 @@ plans/
 - **No** → Continue
 
 ### 5. Is it an implementation plan?
-- **Yes** → `/docs/plans/technical/` or `/docs/plans/features/`
+- **Yes** → `doc/plans/technical/` or `doc/plans/features/` (local, not in submodule)
+- **Note:** `docs/plans/` in submodule is template only. Actual plans go in `doc/plans/` (local).
 - **No** → Continue
 
 ### 6. Is it an architectural decision record?
-- **Yes** → `/docs/decisions/`
+- **Yes** → `doc/decisions/` (local, not in submodule)
+- **Note:** `docs/decisions/` in submodule is template only. Actual ADRs go in `doc/decisions/` (local).
 - **No** → Continue
 
 ### 7. Is it a post-mortem or lesson learned?
-- **Yes** → `/docs/retrospectives/`
+- **Yes** → `doc/retrospectives/` (local, not in submodule)
+- **Note:** `docs/retrospectives/` in submodule contains general lessons. Project-specific retrospectives go in `doc/retrospectives/` (local).
 - **No** → Continue
 
 ### 8. Is it a user story or demo?
@@ -329,10 +342,13 @@ plans/
 | `development/` | How to Implement | "How do I implement?" | Step-by-step workflows |
 | `reference/` | Quick Lookup | "What's the exact requirement?" | Exact numbers/rules |
 | `guides/` | Tutorials | "How do I use X?" | Feature-specific examples |
-| `plans/technical/` | Technical Plans | "What technical work is planned?" | Implementation planning |
-| `plans/features/` | Feature Plans | "What features are planned?" | Product planning |
-| `decisions/` | ADRs | "Why did we choose X?" | Understanding decisions |
-| `retrospectives/` | Lessons Learned | "What went wrong?" | Learning from issues |
+| `doc/plans/technical/` | Technical Plans | "What technical work is planned?" | Implementation planning (local) |
+| `doc/plans/features/` | Feature Plans | "What features are planned?" | Product planning (local) |
+| `docs/plans/` | Template Structure | "How to structure plans?" | Template examples only (global) |
+| `doc/decisions/` | ADRs | "Why did we choose X?" | Project decisions (local) |
+| `docs/decisions/` | ADR Templates | "How to write ADRs?" | Template examples only (global) |
+| `doc/retrospectives/` | Lessons Learned | "What went wrong?" | Project-specific issues (local) |
+| `docs/retrospectives/` | General Lessons | "General lessons?" | General lessons/templates (global) |
 | `stories/` | User Stories | "How does user interact?" | Demo scenarios |
 
 ---

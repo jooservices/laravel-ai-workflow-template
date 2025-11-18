@@ -28,7 +28,7 @@ Feature-specific tutorials and complete code examples.
 
 ## Guide vs Plan
 
-**Plans** (in `docs/plans/`) define **WHAT** to build:
+**Plans** (in `doc/plans/` - local) define **WHAT** to build:
 - Task breakdown with Definition of Done
 - Success metrics and acceptance criteria
 - Time estimates and dependencies

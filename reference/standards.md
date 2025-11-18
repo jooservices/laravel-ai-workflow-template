@@ -287,6 +287,39 @@ Mocking must always support the architectural rules defined in `architecture/pri
 - ✅ **MUST:** camelCase for variable names (e.g., `$userId`)
 - ✅ **MUST:** UPPER_SNAKE_CASE for constants (e.g., `MAX_RETRY_COUNT`)
 
+### Variable Naming Convention
+
+**Core Principle:** Simple but meaningful names that clearly express purpose.
+
+#### Basic Rules:
+- ✅ **MUST:** Use camelCase for all variables (e.g., `$userId`, `$categoryName`, `$isActive`)
+- ✅ **MUST:** Use descriptive, meaningful names (e.g., `$userCount` not `$uc`, `$categoryId` not `$catId`)
+- ✅ **MUST:** Use full words, avoid abbreviations unless universally understood (e.g., `$id`, `$url`, `$httpClient`)
+- ❌ **FORBIDDEN:** Single-letter variables except in loops (`$i`, `$j`, `$k` for iterators)
+- ❌ **FORBIDDEN:** Abbreviated names that require context to understand (`$usr`, `$cat`, `$svc`)
+
+#### Examples:
+
+✅ **CORRECT:**
+```php
+$userId = 42;
+$categoryName = 'Technology';
+$isActive = true;
+$hasPermission = false;
+$userCount = 10;
+$categoryIds = [1, 2, 3];
+$httpClient = app(HttpClient::class);
+```
+
+❌ **WRONG:**
+```php
+$uid = 42;              // Use $userId
+$cat = 'Technology';    // Use $categoryName
+$act = true;            // Use $isActive
+$usrCnt = 10;           // Use $userCount
+$catIds = [1, 2, 3];    // Use $categoryIds
+```
+
 ### Rules (Project-Specific)
 - ✅ **MUST:** Singular for Models, Services, Repositories
 - ✅ **MUST:** Descriptive verbs for Jobs (`Process`, `Send`, `Generate`)
@@ -894,7 +927,7 @@ Generated-By: <Tool or Agent Name>
 Generated-By-Tool: <Tool Name>
 Model: <model-version>
 Task-ID: <PREFIX-N> or N/A
-Plan: docs/plans/... or N/A
+Plan: doc/plans/... or N/A
 Coverage: XX% or N/A or Documentation
 ```
 
@@ -903,7 +936,7 @@ Coverage: XX% or N/A or Documentation
 - ✅ **MUST:** `Generated-By-Tool` - Tool name (e.g., "Cursor Pro", "GitHub Copilot")
 - ✅ **MUST:** `Model` - Model version (e.g., "Auto", "claude-sonnet-3.5-20241022", "gpt-4-turbo-2024-04-09")
 - ✅ **MUST:** `Task-ID` - Task reference (e.g., "SDK-1", "AUTH-2") or `N/A` if no task exists
-- ✅ **MUST:** `Plan` - Plan file path (e.g., "docs/plans/technical/2025-11-13-external-sdk-integration.md") or `N/A` if no plan exists
+- ✅ **MUST:** `Plan` - Plan file path (e.g., "doc/plans/technical/2025-11-13-external-sdk-integration.md") or `N/A` if no plan exists
 - ✅ **MUST:** `Coverage` - Test coverage percentage (e.g., "95%") or `N/A` if no code changes, or `Documentation` for docs-only commits
 
 **Rules:**
@@ -923,7 +956,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: CORE-1
-Plan: docs/plans/technical/2025-11-14-core-http-client.md
+Plan: doc/plans/technical/2025-11-14-core-http-client.md
 Coverage: 95%
 ```
 

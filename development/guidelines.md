@@ -149,7 +149,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-1
-Plan: docs/plans/features/2025-11-14-user-authentication.md
+Plan: doc/plans/features/2025-11-14-user-authentication.md
 Coverage: 85%"
    ```
 
@@ -177,7 +177,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-2
-Plan: docs/plans/features/2025-11-14-user-authentication.md
+Plan: doc/plans/features/2025-11-14-user-authentication.md
 Coverage: 90%"
 ```
 
@@ -248,7 +248,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: CORE-1
-Plan: docs/plans/technical/2025-11-14-core-http-client.md
+Plan: doc/plans/technical/2025-11-14-core-http-client.md
 Coverage: 95%
 
 feat(wordpress): implement CategoryRepository with CRUD
@@ -257,7 +257,7 @@ Generated-By: ChatGPT Plus
 Generated-By-Tool: ChatGPT Plus
 Model: gpt-4o
 Task-ID: WP-2
-Plan: docs/plans/features/2025-11-14-categories-management.md
+Plan: doc/plans/features/2025-11-14-categories-management.md
 Coverage: 90%
 
 docs(guides): add Laravel components patterns guide
@@ -277,6 +277,176 @@ Coverage: Documentation
 - Violations logged and escalated
 
 **Remember:** 1 sub-task = 1 commit. Each commit must be atomic, complete, and independently reversible.
+
+---
+
+## Pull Request (PR) Workflow
+
+### PR Creation Policy
+
+**ABSOLUTE RULES:**
+- ✅ **MUST:** Always create new PR from `develop` branch
+- ✅ **MUST:** Always pull latest `develop` before creating PR branch
+- ✅ **MUST:** One feature = one PR (based on plan, not phase)
+- ✅ **MUST:** PR must be based on a plan file (not on phases)
+- ❌ **FORBIDDEN:** Creating PR from outdated `develop` branch
+- ❌ **FORBIDDEN:** Creating PR based on phases (use plans instead)
+- ❌ **FORBIDDEN:** Multiple features in one PR
+
+### Step-by-Step PR Creation Process
+
+**1. Ensure you're on `develop` branch and it's up-to-date**
+   ```bash
+   git checkout develop
+   git pull origin develop
+   ```
+
+**2. Verify you have latest changes**
+   ```bash
+   git status
+   # Should show: "Your branch is up to date with 'origin/develop'"
+   ```
+
+**3. Create feature branch from `develop`**
+   ```bash
+   git checkout -b feature/plan-name-short-description
+   # Example: git checkout -b feature/user-authentication
+   # Example: git checkout -b feature/category-management
+   ```
+   **Branch naming:**
+   - Format: `feature/<plan-name-short-description>`
+   - Use kebab-case
+   - Keep it descriptive but concise
+   - Reference the plan name when possible
+
+**4. Work on feature (following atomic commit workflow)**
+   - Implement all tasks from the plan
+   - Make atomic commits for each sub-task
+   - Ensure all quality gates pass
+   - Update plan file as tasks complete
+
+**5. Before creating PR, ensure all commits are pushed**
+   ```bash
+   git push origin feature/plan-name-short-description
+   ```
+
+**6. Create PR on GitHub/GitLab**
+   - Base branch: `develop` (MUST be latest)
+   - Compare branch: `feature/plan-name-short-description`
+   - Title: `feat: [Feature Name from Plan]`
+   - Description: Reference the plan file path
+   - Link to plan: `doc/plans/features/plan-name.md`
+
+### PR Requirements
+
+**PR Title Format:**
+```
+feat: [Feature Name]
+```
+Example: `feat: User Authentication`, `feat: Category Management`
+
+**PR Description Template:**
+```markdown
+## Summary
+[Brief description of feature]
+
+## Plan Reference
+- Plan: `doc/plans/features/[plan-name].md`
+- Status: [Active/Review/Completed]
+
+## Changes
+- [List of major changes/commits]
+
+## Testing
+- [ ] All tests pass
+- [ ] Coverage maintained (80%+)
+- [ ] Quality gates passed
+
+## Checklist
+- [ ] Plan file updated
+- [ ] All tasks from plan completed
+- [ ] Documentation updated (if needed)
+```
+
+### PR Scope Rules
+
+- ✅ **1 Feature = 1 PR:** All tasks from one plan file go into one PR
+- ✅ **Plan-Based:** PR scope is determined by the plan file, not by phases
+- ❌ **FORBIDDEN:** Splitting one plan into multiple PRs (unless plan explicitly defines phases as separate plans)
+- ❌ **FORBIDDEN:** Combining multiple plans into one PR
+
+### Examples
+
+✅ **CORRECT:**
+```
+Plan: doc/plans/features/user-authentication.md
+├─ Task A1: User model → Commit 1
+├─ Task A2: UserRepository → Commit 2
+├─ Task A3: AuthService → Commit 3
+└─ Task A4: Controllers → Commit 4
+
+→ All commits go into ONE PR: "feat: User Authentication"
+```
+
+✅ **CORRECT:**
+```
+Plan: doc/plans/features/category-management.md
+├─ Task B1: Category model → Commit 1
+├─ Task B2: CategoryRepository → Commit 2
+└─ Task B3: CategoryService → Commit 3
+
+→ All commits go into ONE PR: "feat: Category Management"
+```
+
+❌ **WRONG:**
+```
+Plan: doc/plans/features/user-authentication.md
+├─ Task A1: User model → Commit 1 → PR #1
+├─ Task A2: UserRepository → Commit 2 → PR #2
+└─ Task A3: AuthService → Commit 3 → PR #3
+
+→ FORBIDDEN: One plan split into multiple PRs
+```
+
+❌ **WRONG:**
+```
+Plan 1: doc/plans/features/user-authentication.md
+Plan 2: doc/plans/features/category-management.md
+
+→ Combined into ONE PR
+
+→ FORBIDDEN: Multiple plans in one PR
+```
+
+### Updating PR After New Commits
+
+If you need to add more commits to an existing PR:
+
+**1. Ensure `develop` is still up-to-date**
+   ```bash
+   git checkout develop
+   git pull origin develop
+   ```
+
+**2. Rebase your feature branch (if needed)**
+   ```bash
+   git checkout feature/plan-name-short-description
+   git rebase develop
+   ```
+
+**3. Continue working and push new commits**
+   ```bash
+   # Make commits following atomic commit workflow
+   git push origin feature/plan-name-short-description
+   ```
+
+### PR Review Process
+
+- PR must pass all quality gates
+- All commits must reference the plan file
+- Plan file must be updated with completion status
+- Coverage must be maintained (80%+)
+- All tests must pass
 
 ---
 

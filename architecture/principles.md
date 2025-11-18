@@ -43,6 +43,11 @@ Laravel projects using this documentation are built on strict type safety, compr
 - **Resource for Models,** Raw JSON for mixed/aggregated data
 - Consistent error structure
 
+### RESTful API Standards
+- **MUST follow ALL standards:** Resource naming, HTTP methods, status codes, UUID identifiers, versioning, security
+- **Complete compliance:** No exceptions or shortcuts allowed
+- **Comprehensive guide:** See RESTful API Design Guide for all requirements
+
 ### Audit Logging
 - **Log all mutations** with actor, before/after, metadata
 - Action log (30d), General log (14d), Third-party request log (14d, planned)
@@ -75,6 +80,8 @@ Laravel projects using this documentation are built on strict type safety, compr
 - **Multi-stage quality gates:** Cursor → ChatGPT → GitHub Pro → {DocumentationTool} → Human
 - **Zero tolerance:** No warnings, suppressions, or deprecations in production
 - **Documentation sync:** Plans and completed tasks must always match
+- **Learn from mistakes:** AI agents MUST check retrospectives before starting work to avoid repeating past issues
+- **Quality over speed:** AI agents MUST follow all policies and rules, NO EXCEPTIONS - never rush or take shortcuts
 
 ### Commit Discipline
 - **Task atomicity:** Break features into small, independent tasks
@@ -424,6 +431,112 @@ Use the same error structure across all endpoints for predictable error handling
 - ❌ **FORBIDDEN:** Mixed response formats within same API
 
 > **Implementation Details:** See [Development Guidelines](../development/guidelines.md#api-development-workflow) for complete endpoint examples and [Architecture Flow](flow.md) for Resource vs Raw JSON decision patterns.
+
+---
+
+## RESTful API Standards Compliance
+
+### 🎯 Principle: Complete RESTful Standards Adherence
+**What you must do:** All RESTful API endpoints MUST follow ALL documented standards without exception. No shortcuts, no partial compliance, no deviations.
+
+**Why:** RESTful standards ensure consistency, security, maintainability, and predictable API behavior. Partial compliance creates confusion, security vulnerabilities, and integration problems. Complete adherence enables reliable client integrations, easier maintenance, and consistent developer experience.
+
+### 📋 Guidelines: Standards Coverage
+
+#### 1. Resource Naming & URL Structure
+- Use plural nouns for resource names (`products`, `users`, `categories`)
+- Use kebab-case for multi-word resources (`product-categories`, `user-preferences`)
+- Include version in URL path (`/api/v1/`, `/api/v2/`)
+- Use lowercase for all resource names
+
+#### 2. Resource Identifiers
+- Use UUID for all public API resource identifiers (security requirement)
+- Route parameter name: `{uuid}` (not `{id}`)
+- Model primary key: `uuid` (string, UUID type)
+- Validate UUID format in FormRequest/Route model binding
+
+#### 3. HTTP Methods
+- Use `GET` for read-only operations (no side effects)
+- Use `POST` for creating new resources
+- Use `PUT` for full resource replacement (all fields required)
+- Use `PATCH` for partial updates (only changed fields)
+- Use `DELETE` for resource deletion
+
+#### 4. HTTP Status Codes
+- Use `Response::HTTP_OK` (200) for successful GET, PUT, PATCH
+- Use `Response::HTTP_CREATED` (201) for successful POST (resource created)
+- Use `Response::HTTP_NO_CONTENT` (204) for successful DELETE
+- Use `Response::HTTP_BAD_REQUEST` (400) for business logic errors
+- Use `Response::HTTP_UNAUTHORIZED` (401) for missing/invalid authentication
+- Use `Response::HTTP_FORBIDDEN` (403) for authorization failures
+- Use `Response::HTTP_NOT_FOUND` (404) for resource not found
+- Use `Response::HTTP_UNPROCESSABLE_ENTITY` (422) for validation errors
+- Use `Response::HTTP_TOO_MANY_REQUESTS` (429) for rate limit exceeded
+- Use `Response::HTTP_INTERNAL_SERVER_ERROR` (500) for unexpected server errors
+
+#### 5. API Versioning
+- Include version in URL path: `/api/v1/`, `/api/v2/`
+- Follow semantic versioning for all API changes
+- Maintain backward compatibility or use proper versioning
+- Add `Deprecated` header to deprecated endpoints
+
+#### 6. Security Standards
+- Implement authentication on all protected endpoints
+- Implement authorization (Policies) for access control
+- Implement rate limiting on all public API endpoints
+- Configure CORS properly (not allow all origins)
+- Use UUID identifiers (prevents enumeration attacks)
+- Never expose API credentials to frontend
+
+#### 7. Request/Response Standards
+- Use FormRequest for all input validation (100% coverage required)
+- Use standardized ApiResponse envelope pattern
+- Use Resource classes for Model data
+- Use raw JSON for non-Model aggregated data
+- Consistent error structure across all endpoints
+
+#### 8. Documentation Standards
+- All endpoints must be automatically documented
+- Documentation must be generated from code (FormRequests, Controllers, Resources)
+- Include request/response examples for each endpoint
+- Document error response formats and codes
+
+### ⚙️ Rules/Standards: RESTful API Requirements
+
+#### Mandatory Compliance:
+- ✅ **MUST:** Follow ALL RESTful API standards documented in [RESTful API Design Guide](../guides/restful-api-design.md)
+- ✅ **MUST:** Use UUID for all public API resource identifiers
+- ✅ **MUST:** Use plural nouns and kebab-case for resource names
+- ✅ **MUST:** Use appropriate HTTP methods (GET, POST, PUT, PATCH, DELETE)
+- ✅ **MUST:** Use HTTP status code constants (not magic numbers)
+- ✅ **MUST:** Include API version in URL path
+- ✅ **MUST:** Implement authentication, authorization, and rate limiting
+- ✅ **MUST:** Use FormRequest for validation (100% coverage)
+- ✅ **MUST:** Use standardized ApiResponse envelope pattern
+- ✅ **MUST:** Auto-generate API documentation from code
+- ❌ **FORBIDDEN:** Using integer `id` in public API routes
+- ❌ **FORBIDDEN:** Using `{id}` as route parameter name
+- ❌ **FORBIDDEN:** Using magic numbers for HTTP status codes
+- ❌ **FORBIDDEN:** Skipping any documented standard
+- ❌ **FORBIDDEN:** Partial compliance or shortcuts
+- ❌ **FORBIDDEN:** Deviating from documented patterns
+
+#### Standards Checklist:
+Before creating any RESTful API endpoint, verify compliance with:
+- [ ] Resource naming (plural, kebab-case, lowercase)
+- [ ] UUID identifiers (not integer IDs)
+- [ ] HTTP method usage (GET/POST/PUT/PATCH/DELETE)
+- [ ] HTTP status codes (using constants)
+- [ ] API versioning (version in URL path)
+- [ ] Authentication & authorization (Policies)
+- [ ] Rate limiting (all public endpoints)
+- [ ] FormRequest validation (100% coverage)
+- [ ] ApiResponse envelope pattern
+- [ ] Resource classes for Model data
+- [ ] CORS configuration (proper origins)
+- [ ] API documentation (auto-generated)
+
+> **Implementation Details:** See [RESTful API Design Guide](../guides/restful-api-design.md) for complete standards, examples, and patterns. See [API Response Standards](#api-response-standardization) for response format requirements. See [API Versioning Discipline](#api-versioning-discipline) for versioning requirements. See [Security First](#23-security-first) for security requirements.
 
 ---
 
@@ -1188,7 +1301,102 @@ Ultimate quality gate before public release.
 
 ---
 
-## 20. Zero Tolerance Quality
+## 20. Learning from Mistakes and Quality Over Speed
+
+### 🎯 Principle: Prevent Repeat Failures
+**What you must do:** AI agents MUST review retrospectives before starting any work to learn from past issues and prevent repeating the same mistakes.
+
+**Why:** Past failures contain valuable lessons. By systematically reviewing retrospectives, AI agents can identify patterns that caused problems and avoid repeating them. This prevents regression, reduces debugging time, and maintains code quality.
+
+### 📋 Guidelines: Retrospectives Review Process
+
+#### 1. Mandatory Pre-Work Review
+Before starting any implementation task, AI agents must:
+- Review all files in `retrospectives/` folder
+- Identify similar patterns or issues in current work
+- Understand root causes of past failures
+- Apply lessons learned to prevent recurrence
+
+#### 2. Pattern Recognition
+When reviewing retrospectives, look for:
+- Similar technical patterns (e.g., helper usage, API calls, state management)
+- Common failure modes (e.g., incorrect assumptions, missing validation)
+- Architectural anti-patterns that caused issues
+- Testing gaps that allowed bugs to reach production
+
+#### 3. Proactive Prevention
+Apply retrospective lessons by:
+- Adding safeguards for known failure modes
+- Following documented fixes and workarounds
+- Implementing additional tests for previously missed edge cases
+- Using established patterns that have proven reliable
+
+### ⚙️ Rules/Standards: Retrospectives Requirements
+
+#### Mandatory Review Requirements:
+- ✅ **MUST:** Review `retrospectives/` folder before starting any new work
+- ✅ **MUST:** Check for similar patterns in current implementation
+- ✅ **MUST:** Apply lessons learned from past issues
+- ❌ **FORBIDDEN:** Starting work without reviewing retrospectives
+- ❌ **FORBIDDEN:** Ignoring documented failure modes
+
+#### Integration with Workflow:
+- ✅ **MUST:** Include retrospectives review in mandatory reading order
+- ✅ **MUST:** Reference relevant retrospectives in decision-making process
+- ✅ **MUST:** Document how retrospective lessons were applied (if applicable)
+
+> **Implementation Details:** See [AI Workflow](../ai-workflow.md#mandatory-reading-order) for complete reading requirements and [Retrospectives](../retrospectives/README.md) for retrospective format and examples.
+
+---
+
+### 🎯 Principle: Quality Over Speed - No Exceptions
+**What you must do:** AI agents MUST follow all policies and rules without exception, regardless of time constraints or pressure. Never rush or take shortcuts.
+
+**Why:** Rushing leads to mistakes, technical debt, and violations of established standards. Policies exist to prevent issues and maintain quality. Shortcuts create problems that take longer to fix than doing it right the first time. Quality gates and rules are non-negotiable.
+
+### 📋 Guidelines: Maintaining Quality Standards
+
+#### 1. Policy Adherence
+- Follow all documented policies and rules exactly as written
+- Reference standards and guidelines when uncertain
+- Never skip steps or bypass quality gates
+- Complete all required checks before proceeding
+
+#### 2. Time Management
+- Plan adequate time for proper implementation
+- Account for quality checks and testing in estimates
+- Escalate if time constraints conflict with quality requirements
+- Communicate delays rather than compromising standards
+
+#### 3. Quality Gates
+- All quality tools must pass before commit
+- All tests must pass before proceeding
+- All documentation must be updated
+- All policies must be followed
+
+### ⚙️ Rules/Standards: Quality Over Speed Enforcement
+
+#### Absolute Requirements:
+- ✅ **MUST:** Follow all policies and rules, NO EXCEPTIONS
+- ✅ **MUST:** Complete all quality gates before proceeding
+- ✅ **MUST:** Never rush or take shortcuts
+- ✅ **MUST:** Prioritize quality over speed in all decisions
+- ❌ **FORBIDDEN:** Bypassing policies due to time constraints
+- ❌ **FORBIDDEN:** Skipping quality checks to save time
+- ❌ **FORBIDDEN:** Taking shortcuts that violate standards
+- ❌ **FORBIDDEN:** Prioritizing speed over quality
+
+#### When Time is Limited:
+- ✅ **MUST:** Communicate time constraints to human
+- ✅ **MUST:** Request additional time if needed to maintain quality
+- ✅ **MUST:** Never compromise on policies or rules
+- ❌ **FORBIDDEN:** Using time pressure as justification for violations
+
+> **Implementation Details:** See [AI Workflow](../ai-workflow.md#forbidden-practices) for complete list of forbidden practices and [Development Guidelines](../development/guidelines.md) for proper workflow procedures.
+
+---
+
+## 21. Zero Tolerance Quality
 
 ### 🎯 Principle: Perfect Code Quality
 **What you must do:** Maintain absolutely zero warnings, deprecations, or suppressions in production code.
@@ -1223,7 +1431,7 @@ Any suppression requires explicit justification and human approval.
 
 ---
 
-## 21. Documentation as Code
+## 22. Documentation as Code
 
 ### 🎯 Principle: Self-Documenting Code
 **What you must do:** All code must be self-documenting with comprehensive PHPDoc annotations and clear inline comments.
