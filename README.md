@@ -3,10 +3,10 @@
 Reusable documentation hub for Laravel projects following the **Principle → Guideline → Standard** hierarchy.
 
 > **Usage as Submodule**  
-> Add this repository as a Git submodule under your main project's `docs/` (or similar) directory, and customize only where needed (domain‑specific guides, examples, and branding). Always use `master` branch for stable version.
+> Add this repository as a Git submodule at `./ai-workflow/` in your Laravel project, and customize only where needed (domain‑specific guides, examples, and branding). Always use `master` branch for stable version.
 >
 > **⚠️ CRITICAL: Submodule is Read-Only**  
-> **NEVER modify files inside the `docs/` submodule directory - NO EXCEPTIONS.** To override or customize, use local documentation in `./doc/` directory only.
+> **NEVER modify files inside the `./ai-workflow/` submodule directory - NO EXCEPTIONS.** To override or customize, use local documentation in `./docs/` directory only.
 >
 > **Usage for AI Agents**  
 > Any AI assistant (and human) working on the project **must read and follow** these documents before making changes or suggesting actions.
@@ -18,7 +18,7 @@ Reusable documentation hub for Laravel projects following the **Principle → Gu
 This documentation system operates on a **two-tier hierarchy**:
 
 ### 🌐 Global Documentation (Submodule)
-- **Location:** This repository mounted as a Git submodule (typically at `./docs/` in consuming projects)
+- **Location:** This repository mounted as a Git submodule at `./ai-workflow/` in consuming projects
 - **Contents:** 
   - `ai-workflow.md` - AI development workflow (**MUST FOLLOW**)
   - `architecture/` - Principles, flow, patterns
@@ -30,8 +30,8 @@ This documentation system operates on a **two-tier hierarchy**:
 - **Branch:** Always use `master` branch (stable). `develop` branch is under development and may be unstable.
 
 ### 📁 Local Documentation (Project-Specific)
-- **Location:** `./doc/` (singular) in the consuming Laravel project - **SEPARATE directory from submodule**
-- **Important:** Local documentation is in a **different directory** (`./doc/`) than the global documentation submodule (`./docs/`). They are NOT in the same directory.
+- **Location:** `./docs/` in the consuming Laravel project - **SEPARATE directory from submodule**
+- **Important:** Local documentation is in a **different directory** (`./docs/`) than the global documentation submodule (`./ai-workflow/`). They are NOT in the same directory.
 - **Contents:**
   - `plans/` - Project-specific feature/technical plans (actual project plans)
   - `decisions/` - Project-specific Architecture Decision Records (ADRs)
@@ -40,14 +40,14 @@ This documentation system operates on a **two-tier hierarchy**:
 - **Rule:** **CAN OVERRIDE** global documentation (submodule) for project-specific needs
 - **Purpose:** Project-specific documentation that extends or customizes global standards (submodule)
 - **Note:** If local documentation doesn't exist, follow global documentation (submodule) only
-- **⚠️ CRITICAL:** To override global standards, create local documentation in `./doc/`. **NEVER modify files inside `./docs/` submodule** - it is read-only (NO EXCEPTIONS).
+- **⚠️ CRITICAL:** To override global standards, create local documentation in `./docs/`. **NEVER modify files inside `./ai-workflow/` submodule** - it is read-only (NO EXCEPTIONS).
 
 ### 🔄 Precedence Rules
 1. **Global Documentation (Submodule) = Base/Default** - All standards, principles, and workflows defined here MUST be followed
 2. **Local Documentation (Project) = Override/Extension** - Project-specific documentation can override global documentation (submodule) rules when needed
 3. **Conflict Resolution:** If local documentation conflicts with global documentation (submodule), local takes precedence for that specific project
-4. **Directory Separation:** Global documentation (submodule) is in `./docs/`, local documentation is in `./doc/` - they are in separate directories
-5. **⚠️ CRITICAL RULE:** **NEVER modify files inside `./docs/` submodule** - it is read-only (NO EXCEPTIONS). All overrides MUST be done via local documentation in `./doc/` only.
+4. **Directory Separation:** Global documentation (submodule) is in `./ai-workflow/`, local documentation is in `./docs/` - they are in separate directories
+5. **⚠️ CRITICAL RULE:** **NEVER modify files inside `./ai-workflow/` submodule** - it is read-only (NO EXCEPTIONS). All overrides MUST be done via local documentation in `./docs/` only.
 
 ### 📂 Example Structure in Consuming Project
 
@@ -55,7 +55,7 @@ This documentation system operates on a **two-tier hierarchy**:
 <project-root>/
 ├── app/                           # Laravel application code
 ├── config/                        # Laravel configuration
-├── docs/                          # 🌐 Global Documentation (Submodule)
+├── ai-workflow/                  # 🌐 Global Documentation (Submodule)
 │   ├── README.md                  # From submodule
 │   ├── ai-workflow.md            # From submodule (MUST FOLLOW)
 │   ├── architecture/              # From submodule
@@ -63,7 +63,7 @@ This documentation system operates on a **two-tier hierarchy**:
 │   ├── reference/                 # From submodule
 │   ├── guides/                    # From submodule
 │   └── plans/                     # Template structure only (examples)
-└── doc/                           # 📁 Local Documentation (Project-Specific)
+└── docs/                          # 📁 Local Documentation (Project-Specific)
     ├── plans/                     # Actual project plans
     │   ├── features/              # Feature plans
     │   └── technical/             # Technical plans
@@ -78,7 +78,7 @@ This documentation system operates on a **two-tier hierarchy**:
 │                    Laravel Project Root                      │
 │                                                              │
 │  ┌──────────────────┐         ┌──────────────────┐         │
-│  │  ./docs/         │         │  ./doc/          │         │
+│  │  ./ai-workflow/  │         │  ./docs/         │         │
 │  │  (Submodule)     │         │  (Project)       │         │
 │  │                  │         │                  │         │
 │  │  🌐 GLOBAL       │         │  📁 LOCAL        │         │
@@ -107,10 +107,10 @@ This documentation system operates on a **two-tier hierarchy**:
 
 > **Important:** 
 > - AI agents MUST read both global documentation (submodule) and local documentation (project) when available
-> - If local documentation (`./doc/`) doesn't exist, follow global documentation (submodule) only
+> - If local documentation (`./docs/`) doesn't exist, follow global documentation (submodule) only
 > - Global documentation (submodule) provides the foundation; local documentation provides project-specific context and overrides
-> - **Directory Separation:** Global documentation (submodule) is in `./docs/`, local documentation is in `./doc/` - completely separate directories
-> - **⚠️ CRITICAL:** **NEVER modify files inside `./docs/` submodule** - it is read-only (NO EXCEPTIONS). All overrides MUST be done via local documentation in `./doc/` only.
+> - **Directory Separation:** Global documentation (submodule) is in `./ai-workflow/`, local documentation is in `./docs/` - completely separate directories
+> - **⚠️ CRITICAL:** **NEVER modify files inside `./ai-workflow/` submodule** - it is read-only (NO EXCEPTIONS). All overrides MUST be done via local documentation in `./docs/` only.
 
 ---
 
@@ -131,13 +131,13 @@ git submodule update --init --recursive
 
 **What This Does:**
 - Clones the main project repository
-- Initializes and updates the `docs/` submodule automatically
+- Initializes and updates the `ai-workflow/` submodule automatically
 - Ensures you have the complete documentation structure
 
 **After Cloning:**
-- Global documentation (submodule) is in `./docs/` - **READ-ONLY (NEVER modify)**
-- Create local documentation in `./doc/` if needed (see "Documentation Hierarchy" section above)
-- **Remember:** Never modify files inside `./docs/` submodule - it is read-only (NO EXCEPTIONS)
+- Global documentation (submodule) is in `./ai-workflow/` - **READ-ONLY (NEVER modify)**
+- Create local documentation in `./docs/` if needed (see "Documentation Hierarchy" section above)
+- **Remember:** Never modify files inside `./ai-workflow/` submodule - it is read-only (NO EXCEPTIONS)
 
 ---
 
@@ -147,7 +147,7 @@ git submodule update --init --recursive
   This global documentation (submodule) defines how work should be done in a Laravel codebase: architecture, module structure, quality gates, testing, and commit discipline. AI agents are expected to treat it as the **source of truth** for behavior and implementation patterns.
 
 - **Reusable in any Laravel project**  
-  The global documentation (submodule) is framework‑level, not app‑specific. You can mount this submodule under `docs/` in any Laravel project and layer your own plans/ADRs/retrospectives in `doc/` (local documentation).
+  The global documentation (submodule) is framework‑level, not app‑specific. You can mount this submodule at `./ai-workflow/` in any Laravel project and layer your own plans/ADRs/retrospectives in `./docs/` (local documentation).
 
 - **Modules are optional, but strongly recommended**  
   The architecture and examples assume:
@@ -267,24 +267,24 @@ Step‑by‑step tutorials and how‑to documentation (enable what you need per 
 
 - [**Writing Plans Guide**](guides/writing-plans.md) – How to write implementation plans.
 
-In each project, keep your own plans under `doc/plans/` in the parent repo (not in the submodule):
+In each project, keep your own plans under `docs/plans/` in the parent repo (not in the submodule):
 
-- `doc/plans/features/` – Feature/product plans.  
-- `doc/plans/technical/` – Technical/refactor/infrastructure plans.
+- `docs/plans/features/` – Feature/product plans.  
+- `docs/plans/technical/` – Technical/refactor/infrastructure plans.
 
-> **Note:** The `docs/plans/` folder in the submodule is a template structure only. Your actual project plans go in `doc/plans/` (local).
+> **Note:** The `ai-workflow/plans/` folder in the submodule is a template structure only. Your actual project plans go in `docs/plans/` (local).
 
 ### 📝 Decisions
 
 Architecture Decision Records (ADRs) documenting major architectural choices.  
-Keep project‑specific ADRs under `doc/decisions/` in the parent repo.
+Keep project‑specific ADRs under `docs/decisions/` in the parent repo.
 
 ### 🔍 Retrospectives
 
 Post‑mortems and lessons learned from production issues.  
-Keep project‑specific retrospectives under `doc/retrospectives/` in the parent repo.
+Keep project‑specific retrospectives under `docs/retrospectives/` in the parent repo.
 
-> **Note:** Global retrospectives in `docs/retrospectives/` (submodule) contain general lessons. Local retrospectives in `doc/retrospectives/` contain project-specific issues.
+> **Note:** Global retrospectives in `ai-workflow/retrospectives/` (submodule) contain general lessons. Local retrospectives in `docs/retrospectives/` contain project-specific issues.
 
 ---
 

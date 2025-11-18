@@ -68,17 +68,17 @@ This template includes references to optional technologies:
 This documentation system uses a **two-tier hierarchy**:
 
 ### 🌐 Global Documentation (This Submodule)
-- **Location:** This repository mounted as a Git submodule (typically at `./docs/` in consuming projects)
+- **Location:** This repository mounted as a Git submodule at `./ai-workflow/` in consuming projects
 - **Rule:** **MUST BE FOLLOWED** - This is the source of truth
 - **Contents:** `ai-workflow.md`, `architecture/`, `development/`, `reference/`, `guides/`
 
 ### 📁 Local Documentation (Your Project)
-- **Location:** `./doc/` (singular) in your Laravel project - **SEPARATE directory from submodule**
+- **Location:** `./docs/` in your Laravel project - **SEPARATE directory from submodule**
 - **Rule:** **CAN OVERRIDE** global documentation (submodule) for project-specific needs
 - **Contents:** `plans/`, `decisions/`, `retrospectives/`, and any project-specific guides
 - **Note:** If local documentation doesn't exist, follow global documentation (submodule) only
-- **Important:** Local docs are in a **different directory** (`./doc/`) than the submodule (`./docs/`). They are NOT in the same directory.
-- **⚠️ CRITICAL:** To override global standards, create local documentation in `./doc/`. **NEVER modify files inside `./docs/` submodule** - it is read-only.
+- **Important:** Local docs are in a **different directory** (`./docs/`) than the submodule (`./ai-workflow/`). They are NOT in the same directory.
+- **⚠️ CRITICAL:** To override global standards, create local documentation in `./docs/`. **NEVER modify files inside `./ai-workflow/` submodule** - it is read-only.
 
 ### 🔄 Precedence
 - **Global = Base/Default** - All standards MUST be followed
@@ -88,56 +88,64 @@ This documentation system uses a **two-tier hierarchy**:
 ## ⚠️ CRITICAL RULE: Submodule is Read-Only
 
 **ABSOLUTE RULE - NO EXCEPTIONS:**
-- ❌ **NEVER modify, edit, delete, or add files inside the `docs/` submodule directory**
+- ❌ **NEVER modify, edit, delete, or add files inside the `./ai-workflow/` submodule directory**
 - ❌ **The submodule is READ-ONLY - NO EXCEPTIONS**
-- ✅ **ONLY way to override or customize:** Use local documentation in `./doc/` directory
-- ✅ **ONLY way to add project-specific content:** Create files in `./doc/` (plans, decisions, retrospectives)
+- ✅ **ONLY way to override or customize:** Use local documentation in `./docs/` directory
+- ✅ **ONLY way to add project-specific content:** Create files in `./docs/` (plans, decisions, retrospectives)
 
 **Why:**
 - Submodule updates will overwrite any local changes
 - Submodule is shared across projects - modifications would affect all projects
-- Local documentation (`./doc/`) is the correct place for project-specific overrides
+- Local documentation (`./docs/`) is the correct place for project-specific overrides
 
 **How to Override:**
-- Create ADRs in `doc/decisions/` to override global standards
-- Create project-specific plans in `doc/plans/`
-- Create project-specific retrospectives in `doc/retrospectives/`
+- Create ADRs in `docs/decisions/` to override global standards
+- Create project-specific plans in `docs/plans/`
+- Create project-specific retrospectives in `docs/retrospectives/`
 - See "Local Documentation Override Example" section below
 
 ## How to Use This Submodule in Your Project
 
 1. **Add as Git Submodule**
 
-   **Initial Setup:**
+   **Exact Commands (Copy & Paste):**
+   
    ```bash
-   # Navigate to your Laravel project root
+   # Step 1: Navigate to your Laravel project root
    cd /path/to/your/laravel-project
    
-   # Add the submodule (replace <repo-url> with actual repository URL)
-   # Use 'master' branch for stable version (recommended)
-   git submodule add -b master <repo-url> docs
+   # Step 2: Add the submodule at ./ai-workflow/
+   # Replace <repo-url> with: https://github.com/jooservices/laravel-ai-workflow-template.git
+   git submodule add -b master https://github.com/jooservices/laravel-ai-workflow-template.git ai-workflow
    
-   # Initialize and update submodule
+   # Step 3: Initialize and update submodule
    git submodule update --init --recursive
+   
+   # Step 4: Create local documentation directory structure
+   mkdir -p docs/plans/features docs/plans/technical docs/decisions docs/retrospectives
+   
+   # Step 5: Commit the submodule addition
+   git add .gitmodules ai-workflow docs
+   git commit -m "docs: add documentation submodule and create local docs structure"
    ```
 
    **What This Does:**
-   - Creates `docs/` directory containing the submodule
+   - Creates `ai-workflow/` directory containing the submodule
    - Creates `.gitmodules` file in your project root (tracks submodule configuration)
-   - The `docs/` folder becomes your **global documentation (submodule)** (MUST FOLLOW)
+   - The `ai-workflow/` folder becomes your **global documentation (submodule)** (MUST FOLLOW)
+   - Creates `docs/` directory for your local project-specific documentation
 
-   **Recommended Path:**
-   - `<project-root>/docs/` (recommended) - This is where the submodule will be mounted
-   - Treat the root of this submodule as your global documentation root
-
-   **Important:** Local documentation goes in a **separate directory** (`./doc/`), NOT inside the submodule directory (`./docs/`).
+   **Important:** 
+   - Global documentation (submodule) is at `./ai-workflow/` - **READ-ONLY**
+   - Local documentation goes in `./docs/` - **SEPARATE directory** from submodule
+   - These are completely separate directories
 
    **⚠️ CRITICAL RULE - NO EXCEPTIONS:**
-   - ❌ **NEVER modify files inside `docs/` submodule directory**
+   - ❌ **NEVER modify files inside `./ai-workflow/` submodule directory**
    - ❌ **NEVER edit, delete, or add files to the submodule**
    - ❌ **NO EXCEPTIONS - This is a read-only submodule**
-   - ✅ **ONLY way to override:** Use local documentation in `./doc/` directory
-   - ✅ **ONLY way to customize:** Create project-specific docs in `./doc/` that override global standards
+   - ✅ **ONLY way to override:** Use local documentation in `./docs/` directory
+   - ✅ **ONLY way to customize:** Create project-specific docs in `./docs/` that override global standards
 
 2. **Decide What to Keep vs. Ignore**
    - Keep core docs that are generally useful for any Laravel project:
@@ -149,23 +157,23 @@ This documentation system uses a **two-tier hierarchy**:
 
 3. **Create Your Own Project-Specific Docs (Local Documentation)**
    
-   Create a `doc/` folder (singular) in your project root for local documentation:
+   The local documentation directory structure is created automatically in Step 4 above. If you need to create it manually:
    
    ```bash
-   mkdir -p doc/plans/features doc/plans/technical doc/decisions doc/retrospectives
+   mkdir -p docs/plans/features docs/plans/technical docs/decisions docs/retrospectives
    ```
    
    **Local Documentation Structure:**
-   - `doc/plans/features/` – Feature/product plans (actual project plans)
-   - `doc/plans/technical/` – Technical/refactor/infrastructure plans
-   - `doc/decisions/` – Project-specific Architecture Decision Records (ADRs)
-   - `doc/retrospectives/` – Project-specific post-mortems and lessons learned
+   - `docs/plans/features/` – Feature/product plans (actual project plans)
+   - `docs/plans/technical/` – Technical/refactor/infrastructure plans
+   - `docs/decisions/` – Project-specific Architecture Decision Records (ADRs)
+   - `docs/retrospectives/` – Project-specific post-mortems and lessons learned
    
    > **Important:** 
-   > - The `docs/plans/` folder in the submodule is a **template structure only** (examples)
-   > - Your **actual project plans** go in `doc/plans/` (local, outside submodule)
+   > - The `ai-workflow/plans/` folder in the submodule is a **template structure only** (examples)
+   > - Your **actual project plans** go in `docs/plans/` (local, outside submodule)
    > - These local docs can override global standards when needed
-   > - If `doc/` doesn't exist, follow global documentation only
+   > - If `docs/` doesn't exist, follow global documentation only
 
 4. **Use Placeholders as Patterns, Not Required Replacements**
    - When you copy examples into your main project:
@@ -181,21 +189,21 @@ This documentation system uses a **two-tier hierarchy**:
 
 ```text
 <project-root>/
-├── docs/                      # 🌐 Global Documentation (Submodule)
-│   ├── README.md              # From submodule
-│   ├── CUSTOMIZATION.md       # From submodule
-│   ├── ai-workflow.md         # From submodule (MUST FOLLOW)
-│   ├── architecture/          # From submodule
-│   ├── development/           # From submodule
-│   ├── guides/                # From submodule
-│   ├── reference/             # From submodule
-│   └── plans/                 # Template structure only (examples)
-└── doc/                       # 📁 Local Documentation (Project-Specific)
-    ├── plans/                 # Actual project plans
-    │   ├── features/          # Feature plans
-    │   └── technical/         # Technical plans
-    ├── decisions/             # Project-specific ADRs
-    └── retrospectives/        # Project-specific post-mortems
+├── ai-workflow/              # 🌐 Global Documentation (Submodule)
+│   ├── README.md             # From submodule
+│   ├── CUSTOMIZATION.md      # From submodule
+│   ├── ai-workflow.md        # From submodule (MUST FOLLOW)
+│   ├── architecture/         # From submodule
+│   ├── development/          # From submodule
+│   ├── guides/               # From submodule
+│   ├── reference/            # From submodule
+│   └── plans/                # Template structure only (examples)
+└── docs/                     # 📁 Local Documentation (Project-Specific)
+    ├── plans/                # Actual project plans
+    │   ├── features/         # Feature plans
+    │   └── technical/        # Technical plans
+    ├── decisions/            # Project-specific ADRs
+    └── retrospectives/       # Project-specific post-mortems
 ```
 
 ### 📊 Visual Directory Structure
@@ -203,7 +211,7 @@ This documentation system uses a **two-tier hierarchy**:
 ```
 Project Root
 │
-├── docs/  ────────────────────────┐
+├── ai-workflow/  ─────────────────┐
 │   │                              │
 │   └── [Submodule Contents]      │  🌐 GLOBAL
 │       • ai-workflow.md          │  (Submodule)
@@ -213,7 +221,7 @@ Project Root
 │       • guides/                 │
 │       • plans/ (template)       │
 │                                 │
-└── doc/  ────────────────────────┘
+└── docs/  ───────────────────────┘
     │                              │
     └── [Project Contents]        │  📁 LOCAL
         • plans/ (actual)         │  (Project)
@@ -222,7 +230,7 @@ Project Root
 ```
 
 **Key Points:**
-- **Separate Directories:** `docs/` (global, submodule) and `doc/` (local, project) are **completely separate**
+- **Separate Directories:** `ai-workflow/` (global, submodule) and `docs/` (local, project) are **completely separate**
 - **NOT in same directory:** Local documentation is NOT inside the submodule directory
 - **Different purposes:** Global = reusable template, Local = project-specific
 
@@ -231,10 +239,10 @@ Project Root
 - **Local Documentation (Project):** Project-specific documentation that can override global
 
 **Important Notes:**
-- `docs/plans/` in submodule = Template structure only (examples)
-- `doc/plans/` in project = Actual project plans (local)
-- If `doc/` doesn't exist, follow global documentation (submodule) only
-- Local docs are in a **separate directory** (`./doc/`), NOT inside `./docs/` submodule
+- `ai-workflow/plans/` in submodule = Template structure only (examples)
+- `docs/plans/` in project = Actual project plans (local)
+- If `docs/` doesn't exist, follow global documentation (submodule) only
+- Local docs are in a **separate directory** (`./docs/`), NOT inside `./ai-workflow/` submodule
 
 ## Submodule Maintenance
 
@@ -247,15 +255,15 @@ When new versions of the documentation template are available:
 cd /path/to/your/laravel-project
 
 # Update submodule to latest version on master branch (stable)
-git submodule update --remote docs
+git submodule update --remote ai-workflow
 
 # If you need to switch to a specific branch
-cd docs
+cd ai-workflow
 git checkout master  # Use 'master' for stable, 'develop' for development (may be unstable)
 cd ..
 
 # Commit the submodule update
-git add docs .gitmodules
+git add ai-workflow .gitmodules
 git commit -m "docs: update documentation submodule to latest version"
 ```
 
@@ -273,10 +281,10 @@ git commit -m "docs: update documentation submodule to latest version"
 **Specify Branch When Adding:**
 ```bash
 # Stable version (recommended)
-git submodule add -b master <repo-url> docs
+git submodule add -b master <repo-url> ai-workflow
 
 # Development version (use with caution)
-git submodule add -b develop <repo-url> docs
+git submodule add -b develop <repo-url> ai-workflow
 ```
 
 ### Understanding .gitmodules
@@ -288,9 +296,9 @@ The `.gitmodules` file is automatically created when you add a submodule. It tra
 
 **Example `.gitmodules` content:**
 ```ini
-[submodule "docs"]
-    path = docs
-    url = https://github.com/your-org/laravel-ai-workflow-template.git
+[submodule "ai-workflow"]
+    path = ai-workflow
+    url = https://github.com/jooservices/laravel-ai-workflow-template.git
     branch = master
 ```
 
@@ -302,7 +310,7 @@ The `.gitmodules` file is automatically created when you add a submodule. It tra
 ### .gitignore Configuration
 
 **Submodule Files:**
-- ❌ **DO NOT** add `docs/` to `.gitignore` - The submodule directory must be tracked
+- ❌ **DO NOT** add `ai-workflow/` to `.gitignore` - The submodule directory must be tracked
 - ✅ **DO** track `.gitmodules` file (it's automatically tracked)
 - ✅ **DO** track the submodule reference in your main repository
 
@@ -317,20 +325,20 @@ The `.gitmodules` file is automatically created when you add a submodule. It tra
 **Correct `.gitignore` (if you have one):**
 ```gitignore
 # Don't ignore submodule directory
-# docs/  ← DO NOT add this
+# ai-workflow/  ← DO NOT add this
 
 # Your local documentation can be ignored if you don't want to track it
-# doc/  ← Optional: add this if you don't want to track local docs
+# docs/  ← Optional: add this if you don't want to track local docs
 ```
 
 **Recommendation:**
-- Track both `docs/` (submodule) and `doc/` (local) in your main repository
-- Only ignore `doc/` if you have a specific reason (e.g., generated docs)
+- Track both `ai-workflow/` (submodule) and `docs/` (local) in your main repository
+- Only ignore `docs/` if you have a specific reason (e.g., generated docs)
 
 ## ⚠️ Submodule Modification is FORBIDDEN
 
 **ABSOLUTE RULE - NO EXCEPTIONS:**
-- ❌ **NEVER modify, edit, delete, or add files inside the `docs/` submodule directory**
+- ❌ **NEVER modify, edit, delete, or add files inside the `./ai-workflow/` submodule directory**
 - ❌ **The submodule is READ-ONLY - NO EXCEPTIONS**
 - ❌ **Any modifications will be lost when submodule is updated**
 - ❌ **Modifications would affect all projects using this submodule**
@@ -342,21 +350,21 @@ The `.gitmodules` file is automatically created when you add a submodule. It tra
 - Breaking this rule causes maintenance nightmares
 
 **Correct Way to Override:**
-- ✅ Create local documentation in `./doc/` directory
-- ✅ Use ADRs in `doc/decisions/` to document overrides
-- ✅ Create project-specific plans in `doc/plans/`
+- ✅ Create local documentation in `./docs/` directory
+- ✅ Use ADRs in `docs/decisions/` to document overrides
+- ✅ Create project-specific plans in `docs/plans/`
 - ✅ Document all overrides clearly
 
 ## Local Documentation Override Example
 
 Here's how to override a global standard with a local one (the ONLY correct way):
 
-**Global Standard** (`docs/architecture/principles.md`):
+**Global Standard** (`ai-workflow/architecture/principles.md`):
 ```markdown
 - ✅ **MUST:** PHP version **8.4+** (minimum)
 ```
 
-**Local Override** (`doc/decisions/php-version.md`):
+**Local Override** (`docs/decisions/php-version.md`):
 ```markdown
 # ADR: PHP Version Requirement
 
@@ -381,13 +389,13 @@ We will use PHP 8.3 for this project, overriding the global 8.4+ requirement.
 
 In your main project, verify:
 
-- [ ] Submodule is mounted under `docs/` path
+- [ ] Submodule is mounted at `./ai-workflow/` path
 - [ ] `.gitmodules` file exists and is tracked
 - [ ] You know which guides are **optional** (WordPress, LM Studio, Inertia.js, etc.)
-- [ ] Local `doc/` folder created (if needed)
-- [ ] Project-specific plans are added under `doc/plans/` (not `docs/plans/`)
-- [ ] Project-specific decisions are added under `doc/decisions/`
-- [ ] Project-specific retrospectives are added under `doc/retrospectives/`
+- [ ] Local `docs/` folder created (if needed)
+- [ ] Project-specific plans are added under `docs/plans/` (not `ai-workflow/plans/`)
+- [ ] Project-specific decisions are added under `docs/decisions/`
+- [ ] Project-specific retrospectives are added under `docs/retrospectives/`
 
 ## Troubleshooting
 
@@ -397,11 +405,11 @@ In your main project, verify:
 **Solution:**
 ```bash
 # Navigate into submodule directory
-cd docs
+cd ai-workflow
 git fetch origin
 git checkout master  # Always use 'master' for stable version
 cd ..
-git add docs
+git add ai-workflow
 git commit -m "docs: update submodule"
 ```
 
@@ -410,20 +418,20 @@ git commit -m "docs: update submodule"
 
 **Solution:**
 1. **Verify with human** before taking any action
-2. Check if local override is documented in `doc/decisions/`
+2. Check if local override is documented in `docs/decisions/`
 3. If documented, follow local override
 4. If not documented, follow global standard and ask human to create ADR
 
 ### Issue: Missing local documentation
-**Symptom:** `doc/` folder doesn't exist
+**Symptom:** `docs/` folder doesn't exist
 
 **Solution:**
 - Follow global documentation only
-- Create `doc/` folder when you need project-specific overrides
-- Document any overrides in `doc/decisions/` as ADRs
+- Create `docs/` folder when you need project-specific overrides
+- Document any overrides in `docs/decisions/` as ADRs
 
 ### Issue: Submodule shows as modified after clone
-**Symptom:** `git status` shows `docs/` as modified after cloning
+**Symptom:** `git status` shows `ai-workflow/` as modified after cloning
 
 **Solution:**
 ```bash

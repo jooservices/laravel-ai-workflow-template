@@ -246,8 +246,8 @@ touch docs/technical/performance-optimization.md
 When all tasks are checked:
 1. Update status to **Completed**
 2. Update "Updated" date
-3. Create retrospective if significant learnings: `doc/retrospectives/feature-name.md` (local)
-4. Move plan to archive if desired (optional): `doc/archive/features/` (local)
+3. Create retrospective if significant learnings: `docs/retrospectives/feature-name.md` (local)
+4. Move plan to archive if desired (optional): `docs/archive/features/` (local)
 
 ## Examples
 
@@ -365,7 +365,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: WP-5
-Plan: doc/plans/features/2025-11-14-post-scheduling.md
+Plan: docs/plans/features/2025-11-14-post-scheduling.md
 Coverage: 90%"
 ```
 
@@ -442,12 +442,12 @@ Use GitHub issues/projects to track plan status:
 
 ## References
 
-- See `docs/architecture/principles.md` for engineering standards
-- See `docs/development/code-quality.md` for testing requirements
-- See existing plans in `doc/plans/features/` (local) for project examples
-- See `docs/plans/` (submodule) for template structure examples
-- See `doc/decisions/` for project-specific Architecture Decision Records (ADRs)
-- See `docs/decisions/` (submodule) for ADR format templates and examples
+- See `ai-workflow/architecture/principles.md` for engineering standards
+- See `ai-workflow/development/code-quality.md` for testing requirements
+- See existing plans in `docs/plans/features/` (local) for project examples
+- See `ai-workflow/plans/` (submodule) for template structure examples
+- See `docs/decisions/` for project-specific Architecture Decision Records (ADRs)
+- See `ai-workflow/decisions/` (submodule) for ADR format templates and examples
 
 ---
 
