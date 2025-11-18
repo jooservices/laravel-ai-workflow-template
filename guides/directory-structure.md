@@ -5,11 +5,11 @@
 This guide explains the purpose and organization of each directory within the documentation root, following the **Principle → Guideline → Standard** hierarchy.
 
 > **When used as a Git submodule:**  
-> In a consuming Laravel project, this repository is typically mounted under `<project-root>/docs/`. In that setup, the root of this repo **is** the `docs/` folder for your project.
+> In a consuming Laravel project, this repository is mounted at `<project-root>/ai-workflow/`. The root of this repo **is** the `ai-workflow/` folder for your project. Local project documentation goes in `<project-root>/docs/`.
 
 ---
 
-## 📐 `/docs/architecture/` - Long-Lived Design Decisions
+## 📐 `/ai-workflow/architecture/` - Long-Lived Design Decisions
 
 **Purpose:** Documents that define **What & Why** - engineering principles and architectural patterns.
 
@@ -29,7 +29,7 @@ This guide explains the purpose and organization of each directory within the do
 
 ---
 
-## 🛠️ `/docs/development/` - Workflow & Tooling
+## 🛠️ `/ai-workflow/development/` - Workflow & Tooling
 
 **Purpose:** Documents that explain **How to Implement** - step-by-step procedures and tooling.
 
@@ -49,7 +49,7 @@ This guide explains the purpose and organization of each directory within the do
 
 ---
 
-## 📚 `/docs/reference/` - Quick Lookup
+## 📚 `/ai-workflow/reference/` - Quick Lookup
 
 **Purpose:** Documents for **Quick Reference** - exact requirements, numbers, and configurations.
 
@@ -69,7 +69,7 @@ This guide explains the purpose and organization of each directory within the do
 
 ---
 
-## 📖 `/docs/guides/` - Step-by-Step Tutorials
+## 📖 `/ai-workflow/guides/` - Step-by-Step Tutorials
 
 **Purpose:** Feature-specific tutorials with complete code examples.
 
@@ -94,10 +94,10 @@ This guide explains the purpose and organization of each directory within the do
 
 ---
 
-## 📋 `/docs/plans/` - Implementation Plans (Template Structure Only)
+## 📋 `/ai-workflow/plans/` - Implementation Plans (Template Structure Only)
 
-> **Important:** The `docs/plans/` folder in the submodule is a **template structure only** (examples).  
-> Your **actual project plans** must be located in `doc/plans/` (local, outside submodule).
+> **Important:** The `ai-workflow/plans/` folder in the submodule is a **template structure only** (examples).  
+> Your **actual project plans** must be located in `docs/plans/` (local, outside submodule).
 
 **Purpose:** Template structure showing how to organize project planning documents.
 
@@ -108,7 +108,7 @@ plans/
 └── features/       # Feature and product plans (template examples)
 ```
 
-### `/docs/plans/technical/` - Technical Plans (Template)
+### `/ai-workflow/plans/technical/` - Technical Plans (Template)
 
 **Purpose:** Template examples for implementation-focused plans:
 - Code refactoring and improvements
@@ -119,9 +119,9 @@ plans/
 
 **File Naming:** `YYYY-MM-DD-{plan-name}.md`
 
-**Note:** These are template examples. Your actual technical plans go in `doc/plans/technical/` (local).
+**Note:** These are template examples. Your actual technical plans go in `docs/plans/technical/` (local).
 
-### `/docs/plans/features/` - Feature Plans (Template)
+### `/ai-workflow/plans/features/` - Feature Plans (Template)
 
 **Purpose:** Template examples for product-focused plans:
 - New user features
@@ -132,7 +132,7 @@ plans/
 
 **File Naming:** `YYYY-MM-DD-{plan-name}.md`
 
-**Note:** These are template examples. Your actual feature plans go in `doc/plans/features/` (local).
+**Note:** These are template examples. Your actual feature plans go in `docs/plans/features/` (local).
 
 **Plan Structure (applies to both template and actual plans):**
 - Status, Owner, Created/Updated dates
@@ -142,10 +142,10 @@ plans/
 
 ---
 
-## 📝 `/docs/decisions/` - Architecture Decision Records (ADRs) - Template/Examples
+## 📝 `/ai-workflow/decisions/` - Architecture Decision Records (ADRs) - Template/Examples
 
-> **Note:** The `docs/decisions/` folder in the submodule contains template/examples.  
-> Your **actual project ADRs** go in `doc/decisions/` (local, outside submodule).
+> **Note:** The `ai-workflow/decisions/` folder in the submodule contains template/examples.  
+> Your **actual project ADRs** go in `docs/decisions/` (local, outside submodule).
 
 **Purpose:** Template examples showing how to document key technical decisions and their rationale.
 
@@ -167,14 +167,14 @@ plans/
 
 **File Naming:** `YYYY-MM-DD-decision-title.md`
 
-**Note:** Your actual project ADRs go in `doc/decisions/` (local).
+**Note:** Your actual project ADRs go in `docs/decisions/` (local).
 
 ---
 
-## 🔍 `/docs/retrospectives/` - Post-Mortems & Lessons Learned - Template/Examples
+## 🔍 `/ai-workflow/retrospectives/` - Post-Mortems & Lessons Learned - Template/Examples
 
-> **Note:** The `docs/retrospectives/` folder in the submodule contains general lessons/templates.  
-> Your **actual project-specific retrospectives** go in `doc/retrospectives/` (local, outside submodule).
+> **Note:** The `ai-workflow/retrospectives/` folder in the submodule contains general lessons/templates.  
+> Your **actual project-specific retrospectives** go in `docs/retrospectives/` (local, outside submodule).
 
 **Purpose:** Template examples and general lessons learned from past issues.
 
@@ -197,12 +197,12 @@ plans/
 - Action Items
 
 **Note:** 
-- Global retrospectives (`docs/retrospectives/`) = General lessons/templates
-- Local retrospectives (`doc/retrospectives/`) = Project-specific issues
+- Global retrospectives (`ai-workflow/retrospectives/`) = General lessons/templates
+- Local retrospectives (`docs/retrospectives/`) = Project-specific issues
 
 ---
 
-## 📚 `/docs/stories/` - User Stories & Demos
+## 📚 `/ai-workflow/stories/` - User Stories & Demos
 
 **Purpose:** User stories, demos, and narrative documentation.
 
@@ -218,7 +218,7 @@ plans/
 
 ## 📄 Root Level Documentation Files
 
-### `/docs/README.md` - Documentation Index
+### `/ai-workflow/README.md` - Documentation Index
 
 **Purpose:** Main entry point and navigation for all documentation.
 
@@ -235,7 +235,7 @@ plans/
 
 ---
 
-### `/docs/ai-workflow.md` - AI Development Workflow
+### `/ai-workflow/ai-workflow.md` - AI Development Workflow
 
 **Purpose:** ⭐ **START HERE** for all AI agents - multi-agent pipeline workflow.
 
@@ -255,7 +255,7 @@ plans/
 
 ---
 
-### `/docs/ai-infrastructure-setup.md` - AI Infrastructure
+### `/ai-workflow/ai-infrastructure-setup.md` - AI Infrastructure
 
 **Purpose:** Personal hardware/tools configuration for AI development.
 
@@ -265,7 +265,7 @@ plans/
 
 ---
 
-### `/docs/ai-models.md` - AI Model Selection
+### `/ai-workflow/ai-models.md` - AI Model Selection
 
 **Purpose:** AI model selection and role assignments.
 
@@ -314,18 +314,18 @@ plans/
 - **No** → Continue
 
 ### 5. Is it an implementation plan?
-- **Yes** → `doc/plans/technical/` or `doc/plans/features/` (local, not in submodule)
-- **Note:** `docs/plans/` in submodule is template only. Actual plans go in `doc/plans/` (local).
+- **Yes** → `docs/plans/technical/` or `docs/plans/features/` (local, not in submodule)
+- **Note:** `ai-workflow/plans/` in submodule is template only. Actual plans go in `docs/plans/` (local).
 - **No** → Continue
 
 ### 6. Is it an architectural decision record?
-- **Yes** → `doc/decisions/` (local, not in submodule)
-- **Note:** `docs/decisions/` in submodule is template only. Actual ADRs go in `doc/decisions/` (local).
+- **Yes** → `docs/decisions/` (local, not in submodule)
+- **Note:** `ai-workflow/decisions/` in submodule is template only. Actual ADRs go in `docs/decisions/` (local).
 - **No** → Continue
 
 ### 7. Is it a post-mortem or lesson learned?
-- **Yes** → `doc/retrospectives/` (local, not in submodule)
-- **Note:** `docs/retrospectives/` in submodule contains general lessons. Project-specific retrospectives go in `doc/retrospectives/` (local).
+- **Yes** → `docs/retrospectives/` (local, not in submodule)
+- **Note:** `ai-workflow/retrospectives/` in submodule contains general lessons. Project-specific retrospectives go in `docs/retrospectives/` (local).
 - **No** → Continue
 
 ### 8. Is it a user story or demo?
@@ -342,13 +342,13 @@ plans/
 | `development/` | How to Implement | "How do I implement?" | Step-by-step workflows |
 | `reference/` | Quick Lookup | "What's the exact requirement?" | Exact numbers/rules |
 | `guides/` | Tutorials | "How do I use X?" | Feature-specific examples |
-| `doc/plans/technical/` | Technical Plans | "What technical work is planned?" | Implementation planning (local) |
-| `doc/plans/features/` | Feature Plans | "What features are planned?" | Product planning (local) |
-| `docs/plans/` | Template Structure | "How to structure plans?" | Template examples only (global) |
-| `doc/decisions/` | ADRs | "Why did we choose X?" | Project decisions (local) |
-| `docs/decisions/` | ADR Templates | "How to write ADRs?" | Template examples only (global) |
-| `doc/retrospectives/` | Lessons Learned | "What went wrong?" | Project-specific issues (local) |
-| `docs/retrospectives/` | General Lessons | "General lessons?" | General lessons/templates (global) |
+| `docs/plans/technical/` | Technical Plans | "What technical work is planned?" | Implementation planning (local) |
+| `docs/plans/features/` | Feature Plans | "What features are planned?" | Product planning (local) |
+| `ai-workflow/plans/` | Template Structure | "How to structure plans?" | Template examples only (global) |
+| `docs/decisions/` | ADRs | "Why did we choose X?" | Project decisions (local) |
+| `ai-workflow/decisions/` | ADR Templates | "How to write ADRs?" | Template examples only (global) |
+| `docs/retrospectives/` | Lessons Learned | "What went wrong?" | Project-specific issues (local) |
+| `ai-workflow/retrospectives/` | General Lessons | "General lessons?" | General lessons/templates (global) |
 | `stories/` | User Stories | "How does user interact?" | Demo scenarios |
 
 ---

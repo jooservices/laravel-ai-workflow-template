@@ -931,7 +931,7 @@ Generated-By: <Tool or Agent Name>
 Generated-By-Tool: <Tool Name>
 Model: <model-version>
 Task-ID: <PREFIX-N> or N/A
-Plan: doc/plans/... or N/A
+Plan: docs/plans/... or N/A
 Coverage: XX% or N/A or Documentation
 ```
 
@@ -960,7 +960,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: CORE-1
-Plan: doc/plans/technical/2025-11-14-core-http-client.md
+Plan: docs/plans/technical/2025-11-14-core-http-client.md
 Coverage: 95%
 ```
 

@@ -149,7 +149,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-1
-Plan: doc/plans/features/2025-11-14-user-authentication.md
+Plan: docs/plans/features/2025-11-14-user-authentication.md
 Coverage: 85%"
    ```
 
@@ -177,7 +177,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: AUTH-2
-Plan: doc/plans/features/2025-11-14-user-authentication.md
+Plan: docs/plans/features/2025-11-14-user-authentication.md
 Coverage: 90%"
 ```
 
@@ -248,7 +248,7 @@ Generated-By: Cursor Pro
 Generated-By-Tool: Cursor Pro
 Model: Auto
 Task-ID: CORE-1
-Plan: doc/plans/technical/2025-11-14-core-http-client.md
+Plan: docs/plans/technical/2025-11-14-core-http-client.md
 Coverage: 95%
 
 feat(wordpress): implement CategoryRepository with CRUD
@@ -257,7 +257,7 @@ Generated-By: ChatGPT Plus
 Generated-By-Tool: ChatGPT Plus
 Model: gpt-4o
 Task-ID: WP-2
-Plan: doc/plans/features/2025-11-14-categories-management.md
+Plan: docs/plans/features/2025-11-14-categories-management.md
 Coverage: 90%
 
 docs(guides): add Laravel components patterns guide
@@ -379,7 +379,7 @@ Example: `feat: User Authentication`, `feat: Category Management`
 
 ✅ **CORRECT:**
 ```
-Plan: doc/plans/features/user-authentication.md
+Plan: docs/plans/features/user-authentication.md
 ├─ Task A1: User model → Commit 1
 ├─ Task A2: UserRepository → Commit 2
 ├─ Task A3: AuthService → Commit 3
@@ -390,7 +390,7 @@ Plan: doc/plans/features/user-authentication.md
 
 ✅ **CORRECT:**
 ```
-Plan: doc/plans/features/category-management.md
+Plan: docs/plans/features/category-management.md
 ├─ Task B1: Category model → Commit 1
 ├─ Task B2: CategoryRepository → Commit 2
 └─ Task B3: CategoryService → Commit 3
@@ -400,7 +400,7 @@ Plan: doc/plans/features/category-management.md
 
 ❌ **WRONG:**
 ```
-Plan: doc/plans/features/user-authentication.md
+Plan: docs/plans/features/user-authentication.md
 ├─ Task A1: User model → Commit 1 → PR #1
 ├─ Task A2: UserRepository → Commit 2 → PR #2
 └─ Task A3: AuthService → Commit 3 → PR #3
