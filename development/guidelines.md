@@ -282,6 +282,8 @@ Coverage: Documentation
 
 ## Pull Request (PR) Workflow
 
+> **Complete Guide:** See [PR Review & Merge Policy](pr-review-policy.md) for detailed review requirements, approval rules, merge standards, and quality gates.
+
 ### PR Creation Policy
 
 **ABSOLUTE RULES:**

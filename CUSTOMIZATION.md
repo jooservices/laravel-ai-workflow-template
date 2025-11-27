@@ -385,6 +385,130 @@ We will use PHP 8.3 for this project, overriding the global 8.4+ requirement.
 
 **Result:** For this project, PHP 8.3 is acceptable (local override), but all other global standards still apply.
 
+### Example 2: Override Coverage Standards
+
+**Global Standard** (`ai-workflow/reference/standards.md`):
+```markdown
+| Layer | Minimum Coverage | 
+|-------|-----------------|
+| **Overall Project** | **80%** |
+```
+
+**Local Override** (`docs/reference/standards.md`):
+```markdown
+# Local Standards Override
+
+> **Note:** This file overrides `ai-workflow/reference/standards.md` for this project.
+> See global documentation for base standards.
+
+## Test Coverage Standards
+
+### Coverage Targets (Project-Specific)
+- ✅ **MUST:** 70% test coverage minimum (project-specific)
+- **Rationale:** Legacy codebase constraints documented in `docs/decisions/2025-01-15-coverage-standard.md`
+```
+
+**File Structure:**
+```
+project-root/
+├── ai-workflow/              # Global (read-only)
+│   └── reference/
+│       └── standards.md      # Says: 80% coverage
+└── docs/                      # Local (can override)
+    └── reference/
+        └── standards.md       # Override: 70% coverage → WINS
+```
+
+**Result:** Project uses 70% coverage (local override takes precedence).
+
+### Example 3: Override Architecture Principles Section
+
+**Global Standard** (`ai-workflow/architecture/principles.md`):
+```markdown
+## Modular Architecture
+- ✅ **MUST:** One domain = one module
+```
+
+**Local Override** (`docs/architecture/principles.md`):
+```markdown
+# Local Architecture Principles Override
+
+> **Note:** This file overrides specific sections of `ai-workflow/architecture/principles.md`.
+> For sections not overridden here, refer to global documentation.
+
+## Modular Architecture
+
+### Project-Specific Exception
+
+- ✅ **SHOULD:** One domain = one module (flexible for small projects)
+- **Rationale:** This project has only 2 small domains that share infrastructure.
+- **Documented in:** `docs/decisions/2025-01-10-module-organization.md`
+
+All other architectural principles from global documentation still apply.
+```
+
+**Result:** Project uses flexible module organization while following other global principles.
+
+### AI Agents Reading Protocol
+
+**Reading Order (MANDATORY):**
+
+1. **Check local docs FIRST** (`docs/`)
+   - If file exists in `docs/`, read local version
+   - Local version takes precedence over global
+
+2. **If not found, read global** (`ai-workflow/`)
+   - If file doesn't exist in `docs/`, read global version
+   - Global is the base/default
+
+3. **Document which version used**
+   - Note in response which docs were read
+   - Indicate if override was applied
+
+**Example Reading Flow:**
+
+```
+AI needs: Test coverage standards
+
+Step 1: Check docs/reference/standards.md
+├─ EXISTS → Read local (70% coverage)
+└─ NOT EXISTS → Step 2
+
+Step 2: Check ai-workflow/reference/standards.md
+└─ Read global (80% coverage)
+
+Result: Use local if exists, otherwise global
+```
+
+### Updating the Submodule
+
+**Check for Updates:**
+```bash
+cd ai-workflow/
+git fetch origin
+git log HEAD..origin/master  # See what's new
+```
+
+**Update Submodule:**
+```bash
+cd ai-workflow/
+git checkout master
+git pull origin master
+
+cd ..
+git add ai-workflow/
+git commit -m "chore: update ai-workflow submodule to latest"
+```
+
+**Handling Conflicts:**
+
+If local docs override global and there's a conflict after submodule update:
+
+1. Review global changes in submodule
+2. Update local override if needed
+3. Document why override is still needed
+4. Create ADR if override conflicts with new global standard
+
 ## Integration Checklist
 
 In your main project, verify:
