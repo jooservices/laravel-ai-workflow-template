@@ -59,9 +59,9 @@ Laravel projects using this documentation are built on strict type safety, compr
 - Secure credential management, auto-injection
 
 ### Frontend Standards
-- **TypeScript-only** with strict mode
-- **Dark theme + Bootstrap + FontAwesome** exclusively
-- All pages include Navbar, delete confirmations mandatory
+- **SHOULD use TypeScript** with strict mode (JavaScript allowed for simple scripts)
+- **SHOULD use dark theme + Bootstrap + FontAwesome** (allow other UI frameworks if needed)
+- **SHOULD include Navbar, delete confirmations** (allow exceptions for simple pages)
 
 ### Service Layer
 - **Flow:** Controller → Service → Repository/SDK
@@ -633,17 +633,17 @@ Implement consistent error handling and respect third-party rate limits.
 ## Frontend Standards
 
 ### 🎯 Principle: Type-Safe Dark Theme UI
-**What you must do:** All frontend code must be TypeScript-only with consistent dark theme UI patterns.
+**What you should do:** All frontend code should use TypeScript with consistent dark theme UI patterns where applicable.
 
 **Why:** TypeScript prevents runtime errors and improves development experience. Consistent dark theme and UI patterns create professional user experience and reduce cognitive load.
 
 ### 📋 Guidelines: How to Build Frontend
 
 #### TypeScript-Only Development
-No JavaScript files permitted - use TypeScript with strict mode enabled.
+Use TypeScript with strict mode enabled for all frontend code. JavaScript allowed for simple scripts or legacy compatibility.
 
 #### Consistent UI Framework
-Use Bootstrap + FontAwesome exclusively for all components and styling.
+Use Bootstrap + FontAwesome for all components and styling. Other UI frameworks allowed if project requirements dictate.
 
 #### Standard Interaction Patterns
 Implement consistent loading states, error handling, and user feedback.
@@ -654,21 +654,21 @@ Use appropriate controls for different interaction types (switches vs checkboxes
 ### ⚙️ Rules/Standards: Frontend Requirements
 
 #### Type Safety Requirements:
-- ✅ **MUST:** TypeScript-only with strict mode enabled (no JavaScript files)
-- ✅ **MUST:** Explicit types for all variables, functions, and component props
-- ❌ **FORBIDDEN:** Any usage of `any` type without explicit justification
+- ✅ **SHOULD:** Use TypeScript with strict mode enabled (JavaScript allowed for simple scripts)
+- ✅ **MUST:** Explicit types for all variables, functions, and component props when using TypeScript
+- ❌ **FORBIDDEN:** Any usage of `any` type without explicit justification (when using TypeScript)
 
 #### UI Consistency Requirements:
-- ✅ **MUST:** Dark theme aesthetic across all application surfaces
-- ✅ **MUST:** Bootstrap + FontAwesome exclusively for components and icons
-- ✅ **MUST:** Consistent interaction patterns (loading states, error handling, user feedback)
-- ✅ **MUST:** Standard layout structure with navigation and responsive design
+- ✅ **SHOULD:** Use dark theme aesthetic across all application surfaces (allow exceptions if needed)
+- ✅ **SHOULD:** Use Bootstrap + FontAwesome for components and icons (allow other UI frameworks if project requires)
+- ✅ **SHOULD:** Maintain consistent interaction patterns (loading states, error handling, user feedback)
+- ✅ **SHOULD:** Use standard layout structure with navigation and responsive design (exceptions allowed for simple pages)
 
 #### User Experience Standards:
-- ✅ **MUST:** Appropriate control types for different interactions (switches vs checkboxes)
-- ✅ **MUST:** Confirmation dialogs for destructive actions
-- ✅ **MUST:** Accessible design patterns and keyboard navigation
-- ❌ **FORBIDDEN:** Inconsistent UI patterns within same application
+- ✅ **SHOULD:** Use appropriate control types for different interactions (switches vs checkboxes)
+- ✅ **SHOULD:** Include confirmation dialogs for destructive actions
+- ✅ **SHOULD:** Follow accessible design patterns and keyboard navigation
+- ❌ **FORBIDDEN:** Inconsistent UI patterns within same application (unless explicitly justified)
 
 > **Implementation Details:** See [Development Guidelines](../development/guidelines.md#frontend-development-patterns) for complete component templates and [Standards Reference](../reference/standards.md#frontend-standards) for exact UI requirements and patterns.
 

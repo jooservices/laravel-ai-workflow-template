@@ -21,6 +21,10 @@ Feature-specific tutorials and complete code examples.
 - [**API Versioning**](api-versioning.md) - Semantic versioning and backward compatibility
 - [**Security Best Practices**](security-best-practices.md) - Input validation, CSRF, rate limiting
 - [**Performance Optimization**](performance-optimization.md) - Database optimization, caching, async calls
+- [**Database Migrations**](database-migrations.md) - Migration standards, naming conventions, rollbacks, indexes, and foreign keys
+- [**Database Transactions**](database-transactions.md) - Transaction boundaries, rollback handling, deadlock handling
+- [**Seeders & Factories**](seeders-factories.md) - Database seeding patterns and factory usage for test data generation
+- [**Queue Jobs**](queue-jobs.md) - Queue configuration, retry strategies, failed job handling, and monitoring
 
 ### Planning & Process
 - [**Writing Plans**](writing-plans.md) - How to write technical implementation plans

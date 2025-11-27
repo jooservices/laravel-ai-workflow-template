@@ -111,6 +111,7 @@ This documentation system operates on a **two-tier hierarchy**:
 > - Global documentation (submodule) provides the foundation; local documentation provides project-specific context and overrides
 > - **Directory Separation:** Global documentation (submodule) is in `./ai-workflow/`, local documentation is in `./docs/` - completely separate directories
 > - **⚠️ CRITICAL:** **NEVER modify files inside `./ai-workflow/` submodule** - it is read-only (NO EXCEPTIONS). All overrides MUST be done via local documentation in `./docs/` only.
+> - **How to Override:** See [CUSTOMIZATION.md](CUSTOMIZATION.md#local-documentation-override-example) for detailed examples and procedures
 
 ---
 

@@ -600,6 +600,71 @@ final class TokenRepository implements TokenRepositoryContract
 }
 ```
 
+#### Repository Scope: Query Building, Eager Loading, and Pagination
+
+**Repository SHOULD Handle:**
+- ✅ Simple CRUD queries (findById, findAll, create, update, delete)
+- ✅ Common query patterns (findByX, findLatest, findActive)
+- ✅ Eager loading relationships (with(), load() - to prevent N+1 queries)
+- ✅ Basic pagination methods (paginate(), simplePaginate())
+- ✅ Query builder composition (expose query() method for Service layer)
+
+**Repository SHOULD NOT Handle:**
+- ❌ Business logic decisions (e.g., "ready to ship" = business logic → Service)
+- ❌ Complex filtering with business meaning (Service should build query)
+- ❌ Data transformation for business purposes (Service/Resource responsibility)
+
+**Decision Criteria: Repository vs Service**
+
+**Repository:** Simple data access queries, common query patterns, query optimization (eager loading, selects), reusable finder methods
+
+**Service:** Business logic decisions, complex filtering with business meaning, query orchestration with multiple repositories, data transformation for business
+
+**Examples:**
+
+```php
+// ✅ GOOD: Repository handles eager loading
+final class ProductRepository implements ProductRepositoryContract
+{
+    public function findByIdWithCategory(string $uuid): ?Product
+    {
+        return Product::with('category')
+            ->where('uuid', $uuid)
+            ->first();
+    }
+}
+
+// ✅ GOOD: Repository provides pagination
+public function paginate(int $perPage = 15): LengthAwarePaginator
+{
+    return Product::paginate($perPage);
+}
+
+// ✅ GOOD: Repository exposes query builder for Service
+public function query(): Builder
+{
+    return Product::query();
+}
+```
+
+```php
+// ✅ GOOD: Service builds complex query with business logic
+final class ProductService
+{
+    public function findEligibleForCampaign(string $city): Collection
+    {
+        // Business logic: campaign criteria
+        return $this->repository->query()
+            ->where('age', '>', 20)
+            ->where('gender', 'male')
+            ->where('city', $city)
+            ->where('status', 'active')
+            ->with(['profile'])
+            ->get();
+    }
+}
+```
+
 ### [4] SDK - External APIs (Called directly by Services)
 
 **Services call SDKs directly - NO repository layer for external APIs**
